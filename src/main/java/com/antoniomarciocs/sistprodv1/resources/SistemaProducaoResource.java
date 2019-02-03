@@ -1,27 +1,26 @@
 package com.antoniomarciocs.sistprodv1.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
+import com.antoniomarciocs.sistprodv1.services.SistemaProducaoService;
 
 @RestController
 @RequestMapping(value="/sistemas")
 public class SistemaProducaoResource {
 
-	@RequestMapping(method=RequestMethod.GET)
-	public List<SistemaProducao> listar() {
+	@Autowired
+	private  SistemaProducaoService service;
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id) {
+		SistemaProducao obj = service.buscar(id);
 		
-		SistemaProducao sist1 = new SistemaProducao(1,"Sisteminha Teste",100.0,100.0);
-		SistemaProducao sist2 = new SistemaProducao(2,"Sisteminha IF",100.0,100.0);
-		
-		List<SistemaProducao> lista = new ArrayList<>();
-		lista.add(sist1);
-		lista.add(sist2);
-		return lista;
+		return ResponseEntity.ok().body(obj);
 	}
 }
