@@ -1,45 +1,43 @@
 package com.antoniomarciocs.sistprodv1.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import java.util.Date;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class SistemaProducao implements Serializable {
+public class Canteiro implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	//private Date data;
 	private Double comprimento;
-	private Double largura;
+	private Double largaura;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy="sistema")
-	private List<Setor> setores  = new ArrayList<>();
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="setor_id")
+	private Setor setor;
 	
-	public SistemaProducao() {
+	public Canteiro() {
 		
 	}
 
-	public SistemaProducao(Integer id, String nome /*,Date data*/, Double comprimento, Double largura) {
+	public Canteiro(Integer id, String nome, Double comprimento, Double largaura, Setor setor) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		//this.data = data;
 		this.comprimento = comprimento;
-		this.largura = largura;
+		this.largaura = largaura;
+		this.setor = setor;
 	}
 
 	public Integer getId() {
@@ -58,13 +56,6 @@ public class SistemaProducao implements Serializable {
 		this.nome = nome;
 	}
 
-	/*public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
-	}*/
-
 	public Double getComprimento() {
 		return comprimento;
 	}
@@ -73,21 +64,20 @@ public class SistemaProducao implements Serializable {
 		this.comprimento = comprimento;
 	}
 
-	public Double getLargura() {
-		return largura;
+	public Double getLargaura() {
+		return largaura;
 	}
 
-	public void setLargura(Double largura) {
-		this.largura = largura;
+	public void setLargaura(Double largaura) {
+		this.largaura = largaura;
 	}
-
 	
-	public List<Setor> getSetores() {
-		return setores;
+	public Setor getSetor() {
+		return setor;
 	}
 
-	public void setSetores(List<Setor> setores) {
-		this.setores = setores;
+	public void setSetor(Setor setor) {
+		this.setor = setor;
 	}
 
 	@Override
@@ -106,7 +96,7 @@ public class SistemaProducao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SistemaProducao other = (SistemaProducao) obj;
+		Canteiro other = (Canteiro) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

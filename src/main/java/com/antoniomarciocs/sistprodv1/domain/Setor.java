@@ -8,38 +8,46 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import java.util.Date;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class SistemaProducao implements Serializable {
+public class Setor implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	//private Date data;
-	private Double comprimento;
-	private Double largura;
+	private String regiao;
+	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="sistema_id")
+	private SistemaProducao sistema;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy="sistema")
-	private List<Setor> setores  = new ArrayList<>();
+	@OneToMany(mappedBy="setor")
+	private List<Canteiro> canteiros = new ArrayList<>();
 	
-	public SistemaProducao() {
+	@JsonManagedReference
+	@OneToMany(mappedBy="setor")
+	private List<Criatorio> criatorios = new ArrayList<>();
+	
+	public Setor() {
 		
 	}
 
-	public SistemaProducao(Integer id, String nome /*,Date data*/, Double comprimento, Double largura) {
+	public Setor(Integer id, String nome, String regiao, SistemaProducao sistema) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		//this.data = data;
-		this.comprimento = comprimento;
-		this.largura = largura;
+		this.regiao = regiao;
+		this.sistema= sistema;
 	}
 
 	public Integer getId() {
@@ -58,36 +66,36 @@ public class SistemaProducao implements Serializable {
 		this.nome = nome;
 	}
 
-	/*public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
-	}*/
-
-	public Double getComprimento() {
-		return comprimento;
+	public String getRegiao() {
+		return regiao;
 	}
 
-	public void setComprimento(Double comprimento) {
-		this.comprimento = comprimento;
+	public void setRegiao(String regiao) {
+		this.regiao = regiao;
 	}
-
-	public Double getLargura() {
-		return largura;
-	}
-
-	public void setLargura(Double largura) {
-		this.largura = largura;
-	}
-
 	
-	public List<Setor> getSetores() {
-		return setores;
+	public SistemaProducao getSistema() {
+		return sistema;
 	}
 
-	public void setSetores(List<Setor> setores) {
-		this.setores = setores;
+	public void setSistema(SistemaProducao sistema) {
+		this.sistema = sistema;
+	}
+
+	public List<Canteiro> getCanteiros() {
+		return canteiros;
+	}
+
+	public void setCanteiros(List<Canteiro> canteiros) {
+		this.canteiros = canteiros;
+	}
+
+	public List<Criatorio> getCriatorios() {
+		return criatorios;
+	}
+
+	public void setCriatorios(List<Criatorio> criatorios) {
+		this.criatorios = criatorios;
 	}
 
 	@Override
@@ -106,7 +114,7 @@ public class SistemaProducao implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SistemaProducao other = (SistemaProducao) obj;
+		Setor other = (Setor) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
