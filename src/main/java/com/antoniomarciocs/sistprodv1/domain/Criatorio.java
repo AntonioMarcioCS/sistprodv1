@@ -1,6 +1,8 @@
 package com.antoniomarciocs.sistprodv1.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //import java.util.Date;
 
@@ -26,6 +30,10 @@ public class Criatorio implements Serializable {
 	private Double comprimento;
 	private Double largura;
 	private Double profundidade;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="criatorio")
+	private List<Animal> animais = new ArrayList<>();
 	
 	@JsonBackReference
 	@ManyToOne
@@ -95,6 +103,13 @@ public class Criatorio implements Serializable {
 		this.setor = setor;
 	}
 	
+	public List<Animal> getAnimais() {
+		return animais;
+	}
+
+	public void setAnimais(List<Animal> animais) {
+		this.animais = animais;
+	}
 
 	@Override
 	public int hashCode() {

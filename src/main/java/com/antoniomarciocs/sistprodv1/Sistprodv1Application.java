@@ -1,6 +1,7 @@
 package com.antoniomarciocs.sistprodv1;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.antoniomarciocs.sistprodv1.domain.Animal;
 import com.antoniomarciocs.sistprodv1.domain.Canteiro;
 import com.antoniomarciocs.sistprodv1.domain.Criatorio;
 import com.antoniomarciocs.sistprodv1.domain.Setor;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
+import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
+import com.antoniomarciocs.sistprodv1.domain.enums.TipoAnimal;
+import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SetorRepository;
@@ -32,6 +37,8 @@ public class Sistprodv1Application implements CommandLineRunner {
 	@Autowired
 	private CriatorioRepository criatorioRepository;
 	
+	@Autowired
+	private AnimalRepository animalRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Sistprodv1Application.class, args);
@@ -52,17 +59,21 @@ public class Sistprodv1Application implements CommandLineRunner {
 		Criatorio criatorio1 = new Criatorio(null,"Tanque de Peixes", 100.0, 20.0, 10.0, setor2);
 		Criatorio criatorio2 = new Criatorio(null,"Poleiro das galinhas", 100.0, 20.0, 0.0, setor2);
 		
-		sistema1.getSetores().addAll(Arrays.asList(setor1,setor2));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
 		
+		Animal animal1 = new Animal(null, "Galinha caipira", "Caipira", sdf.parse("11/02/2019 21:27") ,TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL,criatorio2);
+		Animal animal2 = new Animal(null, "Galinha Boa", "Caipira", sdf.parse("11/02/2019 21:28"), TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL, criatorio2);
+		
+		sistema1.getSetores().addAll(Arrays.asList(setor1,setor2));
 		setor1.getCanteiros().addAll(Arrays.asList(canteiro1,canteiro2));
-				
 		setor2.getCriatorios().addAll(Arrays.asList(criatorio1,criatorio2));
+		criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
 		
 		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2));
 		setorRepository.saveAll(Arrays.asList(setor1,setor2));
 		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2));
 		criatorioRepository.saveAll(Arrays.asList(criatorio1,criatorio2));
-		
+		animalRepository.saveAll(Arrays.asList(animal1,animal2));
 	}
 	
 	
