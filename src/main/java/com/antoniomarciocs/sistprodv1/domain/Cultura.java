@@ -9,43 +9,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Canteiro implements Serializable {
-
+public class Cultura implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private Double comprimento;
-	private Double largaura;
 	
+	/*Verificar com @JsonManagedReference de Grupo*/
 	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name="setor_id")
-	private Setor setor;
+	@ManyToMany
+	@JoinTable(name = "CULTURA_GRUPO", joinColumns = @JoinColumn(name="cultura_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	private List<Grupo> grupos = new ArrayList<>();
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy="canteiro")
-	private List<Plantio> plantis = new ArrayList<>();
-		
-	public Canteiro() {
+	public Cultura() {
 		
 	}
 
-	public Canteiro(Integer id, String nome, Double comprimento, Double largaura, Setor setor) {
+	public Cultura(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.comprimento = comprimento;
-		this.largaura = largaura;
-		this.setor = setor;
 	}
 
 	public Integer getId() {
@@ -64,36 +55,12 @@ public class Canteiro implements Serializable {
 		this.nome = nome;
 	}
 
-	public Double getComprimento() {
-		return comprimento;
+	public List<Grupo> getGrupos() {
+		return grupos;
 	}
 
-	public void setComprimento(Double comprimento) {
-		this.comprimento = comprimento;
-	}
-
-	public Double getLargaura() {
-		return largaura;
-	}
-
-	public void setLargaura(Double largaura) {
-		this.largaura = largaura;
-	}
-	
-	public Setor getSetor() {
-		return setor;
-	}
-
-	public void setSetor(Setor setor) {
-		this.setor = setor;
-	}
-	
-	public List<Plantio> getPlantis() {
-		return plantis;
-	}
-
-	public void setPlantis(List<Plantio> plantis) {
-		this.plantis = plantis;
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
 	}
 
 	@Override
@@ -112,7 +79,7 @@ public class Canteiro implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Canteiro other = (Canteiro) obj;
+		Cultura other = (Cultura) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -121,8 +88,6 @@ public class Canteiro implements Serializable {
 		return true;
 	}
 
-	
-	
 	
 	
 }

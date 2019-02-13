@@ -12,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.antoniomarciocs.sistprodv1.domain.Animal;
 import com.antoniomarciocs.sistprodv1.domain.Canteiro;
 import com.antoniomarciocs.sistprodv1.domain.Criatorio;
+import com.antoniomarciocs.sistprodv1.domain.Cultura;
+import com.antoniomarciocs.sistprodv1.domain.Grupo;
+import com.antoniomarciocs.sistprodv1.domain.Plantio;
 import com.antoniomarciocs.sistprodv1.domain.Setor;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
@@ -19,6 +22,9 @@ import com.antoniomarciocs.sistprodv1.domain.enums.TipoAnimal;
 import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
+import com.antoniomarciocs.sistprodv1.repositories.CulturaRepository;
+import com.antoniomarciocs.sistprodv1.repositories.GrupoRepository;
+import com.antoniomarciocs.sistprodv1.repositories.PlantioRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SetorRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
 
@@ -39,6 +45,16 @@ public class Sistprodv1Application implements CommandLineRunner {
 	
 	@Autowired
 	private AnimalRepository animalRepository;
+	
+	@Autowired
+	private GrupoRepository grupoRepository;
+	
+	@Autowired
+	private CulturaRepository culturaRepository;
+	
+	@Autowired
+	private PlantioRepository plantioRepository;
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Sistprodv1Application.class, args);
@@ -61,19 +77,38 @@ public class Sistprodv1Application implements CommandLineRunner {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
 		
+		Grupo grupo1 = new Grupo(null, "Hortalícias");
+		Grupo grupo2 = new Grupo(null, "Grãos");
+		Cultura cultura1 = new Cultura(null, "Cebola");
+		Cultura cultura2 = new Cultura(null, "Coentro");
+		Cultura cultura3 = new Cultura(null, "Milho");
+				
+		grupo1.getCulturas().addAll(Arrays.asList(cultura1, cultura2));
+		grupo2.getCulturas().addAll(Arrays.asList(cultura3));
+		cultura1.getGrupos().addAll(Arrays.asList(grupo1));
+		cultura2.getGrupos().addAll(Arrays.asList(grupo2));
+		
+		
+		Plantio plantio1 = new Plantio(null, "Cebolas", sdf.parse("13/02/2019 07:44"), 50, StatusRetirada.DISPONIVEL, canteiro1, cultura1);
+		Plantio plantio2 = new Plantio(null, "Coentro", sdf.parse("13/02/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro1, cultura1);
+		Plantio plantio3 = new Plantio(null, "Milho", sdf.parse("13/02/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura2);
+		
 		Animal animal1 = new Animal(null, "Galinha caipira", "Caipira", sdf.parse("11/02/2019 21:27") ,TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL,criatorio2);
 		Animal animal2 = new Animal(null, "Galinha Boa", "Caipira", sdf.parse("11/02/2019 21:28"), TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL, criatorio2);
-		
+			
 		sistema1.getSetores().addAll(Arrays.asList(setor1,setor2));
 		setor1.getCanteiros().addAll(Arrays.asList(canteiro1,canteiro2));
 		setor2.getCriatorios().addAll(Arrays.asList(criatorio1,criatorio2));
 		criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
-		
+			
 		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2));
 		setorRepository.saveAll(Arrays.asList(setor1,setor2));
 		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2));
 		criatorioRepository.saveAll(Arrays.asList(criatorio1,criatorio2));
 		animalRepository.saveAll(Arrays.asList(animal1,animal2));
+		grupoRepository.saveAll(Arrays.asList(grupo1,grupo2));
+		culturaRepository.saveAll(Arrays.asList(cultura1,cultura2,cultura3));
+		plantioRepository.saveAll(Arrays.asList(plantio1,plantio2,plantio3));
 	}
 	
 	

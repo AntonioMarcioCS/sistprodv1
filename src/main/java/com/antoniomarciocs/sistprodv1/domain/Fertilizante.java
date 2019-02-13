@@ -1,8 +1,7 @@
 package com.antoniomarciocs.sistprodv1.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,42 +9,36 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Canteiro implements Serializable {
-
+public class Fertilizante implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private Double comprimento;
-	private Double largaura;
+	private Date data;
+	private Integer qtd;
 	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="setor_id")
-	private Setor setor;
+	@JoinColumn(name="plantio_id")
+	private Plantio plantio;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy="canteiro")
-	private List<Plantio> plantis = new ArrayList<>();
-		
-	public Canteiro() {
+	public Fertilizante() {
 		
 	}
 
-	public Canteiro(Integer id, String nome, Double comprimento, Double largaura, Setor setor) {
+	public Fertilizante(Integer id, String nome, Date data, Integer qtd, Plantio plantio) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.comprimento = comprimento;
-		this.largaura = largaura;
-		this.setor = setor;
+		this.data = data;
+		this.qtd = qtd;
+		this.plantio = plantio;
 	}
 
 	public Integer getId() {
@@ -64,36 +57,28 @@ public class Canteiro implements Serializable {
 		this.nome = nome;
 	}
 
-	public Double getComprimento() {
-		return comprimento;
+	public Date getData() {
+		return data;
 	}
 
-	public void setComprimento(Double comprimento) {
-		this.comprimento = comprimento;
+	public void setData(Date data) {
+		this.data = data;
 	}
 
-	public Double getLargaura() {
-		return largaura;
+	public Integer getQtd() {
+		return qtd;
 	}
 
-	public void setLargaura(Double largaura) {
-		this.largaura = largaura;
-	}
-	
-	public Setor getSetor() {
-		return setor;
+	public void setQtd(Integer qtd) {
+		this.qtd = qtd;
 	}
 
-	public void setSetor(Setor setor) {
-		this.setor = setor;
-	}
-	
-	public List<Plantio> getPlantis() {
-		return plantis;
+	public Plantio getPlantio() {
+		return plantio;
 	}
 
-	public void setPlantis(List<Plantio> plantis) {
-		this.plantis = plantis;
+	public void setPlantio(Plantio plantio) {
+		this.plantio = plantio;
 	}
 
 	@Override
@@ -112,7 +97,7 @@ public class Canteiro implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Canteiro other = (Canteiro) obj;
+		Fertilizante other = (Fertilizante) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -120,7 +105,6 @@ public class Canteiro implements Serializable {
 			return false;
 		return true;
 	}
-
 	
 	
 	
