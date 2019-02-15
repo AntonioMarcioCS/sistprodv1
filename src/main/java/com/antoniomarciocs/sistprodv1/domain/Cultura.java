@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cultura implements Serializable {
@@ -23,8 +23,7 @@ public class Cultura implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	/*Verificar com @JsonManagedReference de Grupo*/
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToMany
 	@JoinTable(name = "CULTURA_GRUPO", joinColumns = @JoinColumn(name="cultura_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos = new ArrayList<>();

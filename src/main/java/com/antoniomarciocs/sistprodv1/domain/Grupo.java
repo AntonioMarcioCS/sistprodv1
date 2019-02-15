@@ -21,7 +21,7 @@ public class Grupo implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	/*Verificar com @JsonManagedReference de Cultura*/
+	
 	@JsonBackReference
 	@ManyToMany(mappedBy="grupos")
 	private List<Cultura> culturas = new ArrayList<>();

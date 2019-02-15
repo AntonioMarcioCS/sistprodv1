@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 
 import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Plantio implements Serializable {
@@ -33,20 +34,20 @@ public class Plantio implements Serializable {
 	@JoinColumn(name="canteiro_id")
 	private Canteiro canteiro;
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="cultura_id")
 	private Cultura cultura;
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@OneToMany(mappedBy="plantio")
 	List<Irrigacao> irrigacoes = new ArrayList<>();
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@OneToMany(mappedBy="plantio")
 	List<Fertilizante> fertilizantes = new ArrayList<>();
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@OneToMany(mappedBy="plantio")
 	List<Defensivo> defensivos = new ArrayList<>();
 	
