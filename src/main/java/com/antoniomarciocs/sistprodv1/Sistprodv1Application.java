@@ -80,6 +80,10 @@ public class Sistprodv1Application implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",100.0, 80.0);
 		SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",50.0, 50.0);
+		SistemaProducao sistema3 = new SistemaProducao(null,"Sisteminha três",100.0, 80.0);
+		SistemaProducao sistema4 = new SistemaProducao(null,"Sisteminha Quatro",50.0, 50.0);
+		SistemaProducao sistema5 = new SistemaProducao(null,"Sisteminha Cinco",100.0, 80.0);
+		SistemaProducao sistema6 = new SistemaProducao(null,"Sisteminha Seis",50.0, 50.0);
 	
 		Setor setor1 = new Setor(null,"Hortalícias","Sul", sistema1);
 		Setor setor2 = new Setor(null,"Galinhas","Norte", sistema2);
@@ -140,7 +144,7 @@ public class Sistprodv1Application implements CommandLineRunner {
 		setor2.getCriatorios().addAll(Arrays.asList(criatorio1,criatorio2));
 		criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
 			
-		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2));
+		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2,sistema3, sistema4, sistema5, sistema6));
 		setorRepository.saveAll(Arrays.asList(setor1,setor2));
 		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2));
 		criatorioRepository.saveAll(Arrays.asList(criatorio1,criatorio2));

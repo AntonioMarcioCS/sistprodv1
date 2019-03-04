@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
@@ -44,6 +47,12 @@ public class SistemaProducaoService {
 	
 	public List<SistemaProducao> buscarTodos(){
 		return repo.findAll();
+	}
+	
+	public Page<SistemaProducao> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
+				orderBy);
+		return repo.findAll(pageRequest);		
 	}
 	
 }
