@@ -2,12 +2,19 @@ package com.antoniomarciocs.sistprodv1.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 
 public class SistemaProducaoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=5, max=80, message="Escreva entre 5 e 80 caracteres")
 	private String nome;
 	//private Date data;
 	private Double comprimento;

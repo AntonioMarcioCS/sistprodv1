@@ -5,6 +5,8 @@ import java.util.List;
 
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,8 @@ public class SistemaProducaoResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody SistemaProducao obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody SistemaProducaoDTO objDto){
+		SistemaProducao obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -43,7 +46,8 @@ public class SistemaProducaoResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody SistemaProducao obj, Integer id){
+	public ResponseEntity<Void> update(@Valid @RequestBody SistemaProducaoDTO objDto,@PathVariable Integer id){
+		SistemaProducao obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

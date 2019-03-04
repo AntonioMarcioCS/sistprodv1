@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
+import com.antoniomarciocs.sistprodv1.dto.SistemaProducaoDTO;
 import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.DataIntegrityException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
@@ -55,4 +56,7 @@ public class SistemaProducaoService {
 		return repo.findAll(pageRequest);		
 	}
 	
+	public SistemaProducao fromDTO(SistemaProducaoDTO objDTO) {
+		return new SistemaProducao(objDTO.getId(), objDTO.getNome(), objDTO.getComprimento(), objDTO.getLargura());
+	}
 }
