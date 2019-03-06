@@ -9,30 +9,30 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
-import com.antoniomarciocs.sistprodv1.dto.SistemaProducaoDTO;
-import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
+import com.antoniomarciocs.sistprodv1.domain.Usuario;
+import com.antoniomarciocs.sistprodv1.dto.UsuarioDTO;
+import com.antoniomarciocs.sistprodv1.repositories.UsuarioRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.DataIntegrityException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
 
 @Service
-public class SistemaProducaoService {
+public class UsuarioService {
 
 	@Autowired
-	private SistemaProducaoRepository repo; 
+	private UsuarioRepository repo; 
 	
-	public SistemaProducao buscar(Integer id){
-		Optional<SistemaProducao> obj = repo.findById(id);
+	public Usuario buscar(Integer id){
+		Optional<Usuario> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException("Objeto não encontrado! ID:"+id+ " Nome:"
-		+SistemaProducao.class.getName()));
+		+Usuario.class.getName()));
 	}
 	
-	public SistemaProducao insert(SistemaProducao obj) {
+	public Usuario insert(Usuario obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
 	
-	public SistemaProducao update(SistemaProducao obj) {
+	public Usuario update(Usuario obj) {
 		buscar(obj.getId());
 		return repo.save(obj);
 	}
@@ -42,21 +42,21 @@ public class SistemaProducaoService {
 		try {
 			repo.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir um Sistema, ele possui várias dependências");
+			throw new DataIntegrityException("Não é possível excluir um usuário com dependências");
 		}
 	}
 	
-	public List<SistemaProducao> buscarTodos(){
+	public List<Usuario> buscarTodos(){
 		return repo.findAll();
 	}
 	
-	public Page<SistemaProducao> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
 				orderBy);
 		return repo.findAll(pageRequest);		
 	}
 	
-	public SistemaProducao fromDTO(SistemaProducaoDTO objDTO) {
-		return new SistemaProducao(objDTO.getId(), objDTO.getNome(), objDTO.getComprimento(), objDTO.getLargura(), objDTO.getUsuario());
+	public Usuario fromDTO(UsuarioDTO objDTO) {
+		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), objDTO.getCpf(), objDTO.getSenha());
 	}
 }

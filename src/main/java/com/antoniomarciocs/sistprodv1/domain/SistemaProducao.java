@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 //import java.util.Date;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -25,6 +28,11 @@ public class SistemaProducao implements Serializable {
 	private Double comprimento;
 	private Double largura;
 	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
+	
 	@JsonManagedReference
 	@OneToMany(mappedBy="sistema")
 	private List<Setor> setores  = new ArrayList<>();
@@ -33,13 +41,14 @@ public class SistemaProducao implements Serializable {
 		
 	}
 
-	public SistemaProducao(Integer id, String nome /*,Date data*/, Double comprimento, Double largura) {
+	public SistemaProducao(Integer id, String nome /*,Date data*/, Double comprimento, Double largura, Usuario usuario) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.nome=nome;
 		//this.data = data;
-		this.comprimento = comprimento;
-		this.largura = largura;
+		this.comprimento=comprimento;
+		this.largura=largura;
+		this.usuario=usuario;
 	}
 
 	public Integer getId() {
@@ -88,6 +97,15 @@ public class SistemaProducao implements Serializable {
 
 	public void setSetores(List<Setor> setores) {
 		this.setores = setores;
+	}
+	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

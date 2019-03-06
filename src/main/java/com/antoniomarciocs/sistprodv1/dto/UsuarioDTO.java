@@ -6,10 +6,9 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.domain.Usuario;
 
-public class SistemaProducaoDTO implements Serializable {
+public class UsuarioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
@@ -18,18 +17,19 @@ public class SistemaProducaoDTO implements Serializable {
 	@Length(min=5, max=80, message="Escreva entre 5 e 80 caracteres")
 	private String nome;
 	//private Date data;
-	private Double comprimento;
-	private Double largura;
-	private Usuario usuario;
+	private String email;
+	private String cpf;
+	private String senha;
 	
-	public SistemaProducaoDTO() {		
+	public UsuarioDTO() {		
 	}
 	
-	public SistemaProducaoDTO(SistemaProducao obj) {		
+	public UsuarioDTO(Usuario obj) {		
 		id = obj.getId();
 		nome = obj.getNome();
-		comprimento = obj.getComprimento();
-		largura = obj.getLargura();
+		email = obj.getEmail();
+		cpf = obj.getCpf();
+		senha = obj.getSenha();
 	}
 	
 	public Integer getId() {
@@ -44,26 +44,29 @@ public class SistemaProducaoDTO implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Double getComprimento() {
-		return comprimento;
-	}
-	public void setComprimento(Double comprimento) {
-		this.comprimento = comprimento;
-	}
-	public Double getLargura() {
-		return largura;
-	}
-	public void setLargura(Double largura) {
-		this.largura = largura;
+
+	public String getEmail() {
+		return email;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public String getCpf() {
+		return cpf;
 	}
-	
-	
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 }

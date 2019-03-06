@@ -20,6 +20,7 @@ import com.antoniomarciocs.sistprodv1.domain.Irrigacao;
 import com.antoniomarciocs.sistprodv1.domain.Plantio;
 import com.antoniomarciocs.sistprodv1.domain.Setor;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
+import com.antoniomarciocs.sistprodv1.domain.Usuario;
 import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoAnimal;
 import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
@@ -33,12 +34,16 @@ import com.antoniomarciocs.sistprodv1.repositories.IrrigacaoRepository;
 import com.antoniomarciocs.sistprodv1.repositories.PlantioRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SetorRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
+import com.antoniomarciocs.sistprodv1.repositories.UsuarioRepository;
 
 @SpringBootApplication
 public class Sistprodv1Application implements CommandLineRunner {
 
 	@Autowired
 	private SistemaProducaoRepository sistemaProducaoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
 	private SetorRepository setorRepository;
@@ -78,12 +83,15 @@ public class Sistprodv1Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",100.0, 80.0);
-		SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",50.0, 50.0);
-		SistemaProducao sistema3 = new SistemaProducao(null,"Sisteminha três",100.0, 80.0);
-		SistemaProducao sistema4 = new SistemaProducao(null,"Sisteminha Quatro",50.0, 50.0);
-		SistemaProducao sistema5 = new SistemaProducao(null,"Sisteminha Cinco",100.0, 80.0);
-		SistemaProducao sistema6 = new SistemaProducao(null,"Sisteminha Seis",50.0, 50.0);
+		Usuario user1 = new Usuario(null, "Marcio", "marcio@gmail.com", "123.432.123-56", "123");
+		Usuario user2 = new Usuario(null, "Levi", "levi@gmail.com", "123.432.123-56", "123");
+		
+		SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",100.0, 80.0, user1 );
+		SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",50.0, 50.0, user1);
+		SistemaProducao sistema3 = new SistemaProducao(null,"Sisteminha três",100.0, 80.0, user1);
+		SistemaProducao sistema4 = new SistemaProducao(null,"Sisteminha Quatro",50.0, 50.0, user2);
+		SistemaProducao sistema5 = new SistemaProducao(null,"Sisteminha Cinco",100.0, 80.0,user2);
+		SistemaProducao sistema6 = new SistemaProducao(null,"Sisteminha Seis",50.0, 50.0,user2);
 	
 		Setor setor1 = new Setor(null,"Hortalícias","Sul", sistema1);
 		Setor setor2 = new Setor(null,"Galinhas","Norte", sistema2);
@@ -139,11 +147,14 @@ public class Sistprodv1Application implements CommandLineRunner {
 		Animal animal1 = new Animal(null, "Galinha caipira", "Caipira", sdf.parse("11/02/2019 21:27") ,TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL,criatorio2);
 		Animal animal2 = new Animal(null, "Galinha Boa", "Caipira", sdf.parse("11/02/2019 21:28"), TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL, criatorio2);
 			
+		user1.getSistemas().addAll(Arrays.asList(sistema1,sistema2,sistema3));
+		user2.getSistemas().addAll(Arrays.asList(sistema4,sistema5,sistema6));
 		sistema1.getSetores().addAll(Arrays.asList(setor1,setor2));
 		setor1.getCanteiros().addAll(Arrays.asList(canteiro1,canteiro2));
 		setor2.getCriatorios().addAll(Arrays.asList(criatorio1,criatorio2));
 		criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
 			
+		usuarioRepository.saveAll(Arrays.asList(user1,user2));
 		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2,sistema3, sistema4, sistema5, sistema6));
 		setorRepository.saveAll(Arrays.asList(setor1,setor2));
 		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2));
