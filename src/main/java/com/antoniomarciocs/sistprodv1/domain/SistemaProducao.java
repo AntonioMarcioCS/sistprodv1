@@ -48,7 +48,7 @@ public class SistemaProducao implements Serializable {
 		//this.data = data;
 		this.comprimento=comprimento;
 		this.largura=largura;
-		this.usuario=usuario;
+		this.usuario=(usuario==null)? null: usuario;
 	}
 
 	public Integer getId() {
