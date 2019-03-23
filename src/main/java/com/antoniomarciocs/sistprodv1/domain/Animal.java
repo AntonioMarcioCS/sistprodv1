@@ -44,7 +44,7 @@ public class Animal implements Serializable {
 		this.raca = raca;
 		this.nascimento = nascimento;
 		this.tipo = tipo.getCod();
-		this.status = status.getCod();
+		this.status = (status == null) ? null: status.getCod();
 		this.criatorio = criatorio;
 	}
 

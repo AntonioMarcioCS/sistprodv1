@@ -25,7 +25,7 @@ public class Cultura implements Serializable {
 	
 	@JsonManagedReference
 	@ManyToMany
-	@JoinTable(name = "CULTURA_GRUPO", joinColumns = @JoinColumn(name="cultura_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	@JoinTable(name ="CULTURA_GRUPO", joinColumns = @JoinColumn(name="cultura_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos = new ArrayList<>();
 	
 	public Cultura() {

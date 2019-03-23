@@ -33,8 +33,9 @@ public class UsuarioService {
 	}
 	
 	public Usuario update(Usuario obj) {
-		buscar(obj.getId());
-		return repo.save(obj);
+		Usuario newObj = buscar(obj.getId());
+		atualizaDados(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -58,5 +59,10 @@ public class UsuarioService {
 	
 	public Usuario fromDTO(UsuarioDTO objDTO) {
 		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), objDTO.getCpf(), objDTO.getSenha());
+	}
+	
+	private void atualizaDados(Usuario newObj, Usuario obj) {
+		newObj.setNome(obj.getNome());
+		newObj.setEmail(obj.getEmail());
 	}
 }

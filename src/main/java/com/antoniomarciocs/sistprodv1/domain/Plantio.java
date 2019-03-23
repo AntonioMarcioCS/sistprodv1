@@ -27,7 +27,7 @@ public class Plantio implements Serializable {
 	private String nome;
 	private Date data;
 	private Integer qtd;
-	private StatusRetirada status;
+	private Integer status;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -62,7 +62,7 @@ public class Plantio implements Serializable {
 		this.nome = nome;
 		this.data = data;
 		this.qtd = qtd;
-		this.status = status;
+		this.status = (status==null) ? null : status.getCod();
 		this.canteiro = canteiro;
 		this.cultura = cultura;
 	}
@@ -99,11 +99,11 @@ public class Plantio implements Serializable {
 		this.qtd = qtd;
 	}
 
-	public StatusRetirada getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusRetirada status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

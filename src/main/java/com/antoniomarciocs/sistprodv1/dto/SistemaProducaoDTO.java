@@ -30,6 +30,7 @@ public class SistemaProducaoDTO implements Serializable {
 		nome = obj.getNome();
 		comprimento = obj.getComprimento();
 		largura = obj.getLargura();
+		usuario = obj.getUsuario();
 	}
 	
 	public Integer getId() {

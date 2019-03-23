@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 //import java.util.Date;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -28,7 +28,7 @@ public class SistemaProducao implements Serializable {
 	private Double comprimento;
 	private Double largura;
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
@@ -48,7 +48,7 @@ public class SistemaProducao implements Serializable {
 		//this.data = data;
 		this.comprimento=comprimento;
 		this.largura=largura;
-		this.usuario=(usuario==null)? null: usuario;
+		this.usuario=usuario;
 	}
 
 	public Integer getId() {
