@@ -22,6 +22,8 @@ public class UsuarioDTO implements Serializable {
 	@Email
 	private String email;
 	private String cpf;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String senha;
 	
 	public UsuarioDTO() {		

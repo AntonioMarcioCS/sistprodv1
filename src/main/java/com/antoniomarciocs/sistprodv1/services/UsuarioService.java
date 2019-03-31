@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.Usuario;
 import com.antoniomarciocs.sistprodv1.dto.UsuarioDTO;
@@ -18,6 +19,9 @@ import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountExceptio
 @Service
 public class UsuarioService {
 
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 	@Autowired
 	private UsuarioRepository repo; 
 	
@@ -58,7 +62,7 @@ public class UsuarioService {
 	}
 	
 	public Usuario fromDTO(UsuarioDTO objDTO) {
-		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), objDTO.getCpf(), objDTO.getSenha());
+		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), objDTO.getCpf(), pe.encode(objDTO.getSenha()) );
 	}
 	
 	private void atualizaDados(Usuario newObj, Usuario obj) {

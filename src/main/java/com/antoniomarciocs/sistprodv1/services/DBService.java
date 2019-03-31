@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.antoniomarciocs.sistprodv1.domain.Animal;
@@ -37,6 +38,8 @@ import com.antoniomarciocs.sistprodv1.repositories.UsuarioRepository;
 @Service
 public class DBService {
 	@Autowired
+	private BCryptPasswordEncoder pe;
+	@Autowired
 	private SistemaProducaoRepository sistemaProducaoRepository;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -63,8 +66,8 @@ public class DBService {
 	
 	public void instantiateTestDatabase() throws ParseException  {
 		
-		Usuario user1 = new Usuario(null, "Marcio", "marcio@gmail.com", "123.432.123-56", "123");
-		Usuario user2 = new Usuario(null, "Levi", "levi@gmail.com", "123.432.123-56", "123");
+		Usuario user1 = new Usuario(null, "Marcio", "marcio@gmail.com", "123.432.123-56", pe.encode("123"));
+		Usuario user2 = new Usuario(null, "Levi", "levi@gmail.com", "123.432.123-56", pe.encode("123"));
 		
 		SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",100.0, 80.0, user1 );
 		SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",50.0, 50.0, user1);
