@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuario implements Serializable {
@@ -22,6 +23,8 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String email;
 	private String cpf;
+	
+	@JsonIgnore
 	private String senha;
 	
 	@JsonBackReference
