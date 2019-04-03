@@ -20,8 +20,10 @@ import com.antoniomarciocs.sistprodv1.domain.Plantio;
 import com.antoniomarciocs.sistprodv1.domain.Setor;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.domain.Usuario;
+import com.antoniomarciocs.sistprodv1.domain.enums.Perfil;
 import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoAnimal;
+import com.antoniomarciocs.sistprodv1.domain.enums.TipoUsuario;
 import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
@@ -66,8 +68,10 @@ public class DBService {
 	
 	public void instantiateTestDatabase() throws ParseException  {
 		
-		Usuario user1 = new Usuario(null, "Marcio", "marcio@gmail.com", "123.432.123-56", pe.encode("123"));
-		Usuario user2 = new Usuario(null, "Levi", "levi@gmail.com", "123.432.123-56", pe.encode("123"));
+		Usuario user1 = new Usuario(null, "Marcio", "marcio@gmail.com", "123.432.123-56",TipoUsuario.PESSOAFISICA, pe.encode("123"));
+		Usuario user2 = new Usuario(null, "Levi", "levi@gmail.com", "123.432.123-56",TipoUsuario.PESSOAJURIDICA, pe.encode("123"));
+		user1.addPerfil(Perfil.ADMIN);
+		user2.addPerfil(Perfil.USUARIO);
 		
 		SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",100.0, 80.0, user1 );
 		SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",50.0, 50.0, user1);

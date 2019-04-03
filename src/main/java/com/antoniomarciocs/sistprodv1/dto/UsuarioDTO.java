@@ -23,6 +23,8 @@ public class UsuarioDTO implements Serializable {
 	private String email;
 	private String cpf;
 	
+	private Integer tipo;
+	
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String senha;
 	
@@ -65,7 +67,15 @@ public class UsuarioDTO implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	
+	public Integer getTipo() {
+		return tipo;
+	}
 
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+	
 	public String getSenha() {
 		return senha;
 	}
