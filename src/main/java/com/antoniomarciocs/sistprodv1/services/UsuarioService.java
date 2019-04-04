@@ -11,9 +11,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.Usuario;
+import com.antoniomarciocs.sistprodv1.domain.enums.Perfil;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoUsuario;
 import com.antoniomarciocs.sistprodv1.dto.UsuarioDTO;
 import com.antoniomarciocs.sistprodv1.repositories.UsuarioRepository;
+import com.antoniomarciocs.sistprodv1.security.UserSS;
+import com.antoniomarciocs.sistprodv1.services.exceptions.AuthorizationException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.DataIntegrityException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
 
@@ -27,6 +30,11 @@ public class UsuarioService {
 	private UsuarioRepository repo; 
 	
 	public Usuario buscar(Integer id){
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Usuario> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException("Objeto não encontrado! ID:"+id+ " Nome:"
 		+Usuario.class.getName()));
