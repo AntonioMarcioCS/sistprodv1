@@ -1,3 +1,7 @@
 Ajeitar get e Post de Sistemas
 
+Para acrescentar previsibilidade de colheita assistir o vídeo Inserindo Pedido - aula 50
+
+Para implementar o esqueci a senha da aula 75 é preciso fazer a parte de seriço de email da seção 5. 
+
  

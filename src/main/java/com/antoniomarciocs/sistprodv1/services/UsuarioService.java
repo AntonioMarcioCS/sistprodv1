@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.antoniomarciocs.sistprodv1.domain.Usuario;
 import com.antoniomarciocs.sistprodv1.domain.enums.Perfil;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoUsuario;
@@ -39,10 +41,11 @@ public class UsuarioService {
 		return obj.orElseThrow(() -> new ObjectNotFountException("Objeto não encontrado! ID:"+id+ " Nome:"
 		+Usuario.class.getName()));
 	}
-	
+	@Transactional
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		obj = repo.save(obj);
+		return obj;
 	}
 	
 	public Usuario update(Usuario obj) {
