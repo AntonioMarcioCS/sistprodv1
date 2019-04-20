@@ -17,5 +17,5 @@ import com.antoniomarciocs.sistprodv1.domain.Criatorio;
 public interface AnimalRepository extends JpaRepository<Animal, Integer>  {
 	@Transactional(readOnly=true)
 	@Query("SELECT DISTINCT obj FROM Animal obj INNER JOIN obj.criatorio criatorio WHERE obj.nome LIKE %:nome% AND criatorio IN :criatorio")
-	Page<Animal> findDistinctByNomeContainingAndAnimalIn(@Param("nome") String nome, @Param("criatorio") List<Criatorio> criatorios, Pageable pageRequest);
+	Page<Animal> findDistinctByNomeContainingAndCriatorioIn(@Param("nome") String nome, @Param("criatorio") List<Criatorio> criatorios, Pageable pageRequest);
 }

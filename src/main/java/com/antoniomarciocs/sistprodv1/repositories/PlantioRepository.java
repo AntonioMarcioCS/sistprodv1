@@ -18,5 +18,4 @@ public interface PlantioRepository extends JpaRepository<Plantio, Integer>  {
 	@Transactional(readOnly=true)
 	@Query("SELECT DISTINCT obj FROM Plantio obj INNER JOIN obj.canteiro canteiro WHERE obj.nome LIKE %:nome% AND canteiro IN :canteiro")
 	Page<Plantio> findDistinctByNomeContainingAndCanteiroIn(@Param("nome") String nome, @Param("canteiro") List<Canteiro> canteiros, Pageable pageRequest);
-
 }

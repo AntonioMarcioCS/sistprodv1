@@ -33,7 +33,7 @@ public class AnimalService {
 	public Page<Animal> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		List<Criatorio> criatorio = criatorioRepo.findAllById(ids);
-		return animalRepo.findDistinctByNomeContainingAndAnimalIn(nome,criatorio, pageRequest);	
+		return animalRepo.findDistinctByNomeContainingAndCriatorioIn(nome,criatorio, pageRequest);	
 	}
 	
 	public Animal insert(Animal obj) {
