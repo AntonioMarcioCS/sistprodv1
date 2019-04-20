@@ -12,10 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.antoniomarciocs.sistprodv1.domain.enums.TipoCriatorio;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-//import java.util.Date;
+import java.util.Date;
 
 @Entity
 public class Criatorio implements Serializable {
@@ -25,8 +26,8 @@ public class Criatorio implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	//private Date data;
-	//private TipoCriatorio tipo;
+	private Date data;
+	private Integer tipo;
 	private Double comprimento;
 	private Double largura;
 	private Double profundidade;
@@ -45,10 +46,11 @@ public class Criatorio implements Serializable {
 		
 	}
 
-	public Criatorio(Integer id, String nome, Double comprimento, Double largura, Double profundidade, Setor setor) {
+	public Criatorio(Integer id, String nome, TipoCriatorio tipo, Double comprimento, Double largura, Double profundidade, Setor setor) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.tipo = (tipo==null) ? null : tipo.getCod();
 		this.comprimento = comprimento;
 		this.largura = largura;
 		this.profundidade = profundidade;
@@ -71,6 +73,20 @@ public class Criatorio implements Serializable {
 		this.nome = nome;
 	}
 
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+	public TipoCriatorio getTipo() {
+		return TipoCriatorio.toEnum(tipo);
+	}
+
+	public void setTipo(TipoCriatorio tipo) {
+		this.tipo = tipo.getCod();
+	}
 	public Double getComprimento() {
 		return comprimento;
 	}

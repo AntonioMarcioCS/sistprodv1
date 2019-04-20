@@ -14,4 +14,6 @@ import com.antoniomarciocs.sistprodv1.domain.Usuario;
 public interface SistemaProducaoRepository extends JpaRepository<SistemaProducao, Integer>  {
 	@Transactional(readOnly=true)
 	Page<SistemaProducao> findByUsuario(Usuario usuario, Pageable pageRequest);
+	
+	//SistemaProducao findByUsuario(Usuario usuario);
 }

@@ -10,10 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-//import java.util.Date;
+import java.util.Date;
 import javax.persistence.OneToMany;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -24,7 +24,9 @@ public class SistemaProducao implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	//private Date data;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date data;
 	private Double comprimento;
 	private Double largura;
 	
@@ -41,11 +43,11 @@ public class SistemaProducao implements Serializable {
 		
 	}
 
-	public SistemaProducao(Integer id, String nome /*,Date data*/, Double comprimento, Double largura, Usuario usuario) {
+	public SistemaProducao(Integer id, String nome, Date data, Double comprimento, Double largura, Usuario usuario) {
 		super();
 		this.id = id;
 		this.nome=nome;
-		//this.data = data;
+		this.data = data;
 		this.comprimento=comprimento;
 		this.largura=largura;
 		this.usuario=usuario;
@@ -67,12 +69,12 @@ public class SistemaProducao implements Serializable {
 		this.nome = nome;
 	}
 
-	/*public Date getData() {
+	public Date getData() {
 		return data;
 	}
 	public void setData(Date data) {
 		this.data = data;
-	}*/
+	}
 
 	public Double getComprimento() {
 		return comprimento;

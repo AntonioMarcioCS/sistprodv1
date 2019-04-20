@@ -23,6 +23,7 @@ import com.antoniomarciocs.sistprodv1.domain.Usuario;
 import com.antoniomarciocs.sistprodv1.domain.enums.Perfil;
 import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoAnimal;
+import com.antoniomarciocs.sistprodv1.domain.enums.TipoCriatorio;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoUsuario;
 import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
@@ -70,26 +71,31 @@ public class DBService {
 		
 		Usuario user1 = new Usuario(null, "Marcio", "marcio@gmail.com", "123.432.123-56",TipoUsuario.PESSOAFISICA, pe.encode("123"));
 		Usuario user2 = new Usuario(null, "Levi", "levi@gmail.com", "123.432.123-56",TipoUsuario.PESSOAJURIDICA, pe.encode("123"));
+		Usuario user3 = new Usuario(null, "Luna", "luna@gmail.com", "123.432.123-56",TipoUsuario.PESSOAFISICA, pe.encode("123"));
 		user1.addPerfil(Perfil.ADMIN);
 		user2.addPerfil(Perfil.USUARIO);
+		user3.addPerfil(Perfil.USUARIO);
 		
-		SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",100.0, 80.0, user1 );
-		SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",50.0, 50.0, user1);
-		SistemaProducao sistema3 = new SistemaProducao(null,"Sisteminha três",100.0, 80.0, user1);
-		SistemaProducao sistema4 = new SistemaProducao(null,"Sisteminha Quatro",50.0, 50.0, user2);
-		SistemaProducao sistema5 = new SistemaProducao(null,"Sisteminha Cinco",100.0, 80.0,user2);
-		SistemaProducao sistema6 = new SistemaProducao(null,"Sisteminha Seis",50.0, 50.0,user2);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
+		
+		SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",sdf.parse("10/04/2019 22:31"),100.0, 80.0, user1 );
+		SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",sdf.parse("10/04/2019 22:31"),50.0, 50.0, user1);
+		SistemaProducao sistema3 = new SistemaProducao(null,"Sisteminha três",sdf.parse("10/04/2019 22:31"),100.0, 80.0, user2);
+		SistemaProducao sistema4 = new SistemaProducao(null,"Sisteminha Quatro",sdf.parse("10/04/2019 22:31"),50.0, 50.0, user2);
+		SistemaProducao sistema5 = new SistemaProducao(null,"Sisteminha Cinco",sdf.parse("10/04/2019 22:31"),100.0, 80.0,user2);
+		SistemaProducao sistema6 = new SistemaProducao(null,"Sisteminha Seis",sdf.parse("10/04/2019 22:31"),50.0, 50.0,user3);
 	
 		Setor setor1 = new Setor(null,"Hortalícias","Sul", sistema1);
 		Setor setor2 = new Setor(null,"Galinhas","Norte", sistema2);
+		Setor setor3 = new Setor(null,"Porcos","Norte", sistema6);
 		
 		Canteiro canteiro1 = new Canteiro(null,"Canteiro do Repolho", 100.0, 20.0, setor1);
 		Canteiro canteiro2 = new Canteiro(null,"Canteiro do Alface", 100.0, 20.0, setor1);
 				
-		Criatorio criatorio1 = new Criatorio(null,"Tanque de Peixes", 100.0, 20.0, 10.0, setor2);
-		Criatorio criatorio2 = new Criatorio(null,"Poleiro das galinhas", 100.0, 20.0, 0.0, setor2);
+		Criatorio criatorio1 = new Criatorio(null,"Tanque de Peixes",TipoCriatorio.TANQUE, 100.0, 20.0, 10.0, setor2);
+		Criatorio criatorio2 = new Criatorio(null,"Poleiro das galinhas",TipoCriatorio.POLEIRO, 100.0, 20.0, 0.0, setor2);
+		Criatorio criatorio3 = new Criatorio(null, "Chiqueiro 1", TipoCriatorio.CHIQUEIRO, 20.0, 10.0, 0.0, setor3);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
 		
 		Grupo grupo1 = new Grupo(null, "Hortalícias");
 		Grupo grupo2 = new Grupo(null, "Grãos");
@@ -133,17 +139,20 @@ public class DBService {
 		
 		Animal animal1 = new Animal(null, "Galinha caipira", "Caipira", sdf.parse("11/02/2019 21:27") ,TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL,criatorio2);
 		Animal animal2 = new Animal(null, "Galinha Boa", "Caipira", sdf.parse("11/02/2019 21:28"), TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL, criatorio2);
+		Animal porquinhos = new Animal(null, "Porquinhos da índia", "Índia", sdf.parse("19/04/2019 22:57"), TipoAnimal.PORCO, StatusRetirada.DISPONIVEL, criatorio3);
 			
 		user1.getSistemas().addAll(Arrays.asList(sistema1,sistema2,sistema3));
-		user2.getSistemas().addAll(Arrays.asList(sistema4,sistema5,sistema6));
+		user2.getSistemas().addAll(Arrays.asList(sistema4,sistema5));
+		user3.getSistemas().addAll(Arrays.asList(sistema6));
 		sistema1.getSetores().addAll(Arrays.asList(setor1,setor2));
 		setor1.getCanteiros().addAll(Arrays.asList(canteiro1,canteiro2));
 		setor2.getCriatorios().addAll(Arrays.asList(criatorio1,criatorio2));
 		criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
+		criatorio3.getAnimais().addAll(Arrays.asList(porquinhos));
 			
-		usuarioRepository.saveAll(Arrays.asList(user1,user2));
+		usuarioRepository.saveAll(Arrays.asList(user1,user2,user3));
 		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2,sistema3, sistema4, sistema5, sistema6));
-		setorRepository.saveAll(Arrays.asList(setor1,setor2));
+		setorRepository.saveAll(Arrays.asList(setor1,setor2,setor3));
 		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2));
 		criatorioRepository.saveAll(Arrays.asList(criatorio1,criatorio2));
 		animalRepository.saveAll(Arrays.asList(animal1,animal2));

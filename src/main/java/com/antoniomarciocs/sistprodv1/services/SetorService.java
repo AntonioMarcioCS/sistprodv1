@@ -63,6 +63,12 @@ public class SetorService {
 		return repo.findAll(pageRequest);	
 	}
 	
+	public Page<Setor> search(String nome, Integer id, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Optional<SistemaProducao> sistema = sistemaRepo.findById(id);
+		return repo.findDistinctByNomeContainingAndSistemaProducaoIn(nome, sistema, pageRequest);	
+	}
+	
 	public Setor fromDTO(SetorDTO objDTO) {
 		SistemaProducao sist = sistemaRepo.getOne(objDTO.getSistemaId());
 		Setor setor = new Setor(objDTO.getId(), objDTO.getNome(), objDTO.getRegiao(), sist);

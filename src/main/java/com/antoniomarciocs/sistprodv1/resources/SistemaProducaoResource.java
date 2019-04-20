@@ -1,16 +1,12 @@
 package com.antoniomarciocs.sistprodv1.resources;
 
 import java.net.URI;
-import java.util.List;
-
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,25 +67,24 @@ public class SistemaProducaoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	//Tirei o findAll p testar o findPage. os dois tem o mesmo mapeamento
+	/*@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<SistemaProducaoDTO>> findAll() {
 		List<SistemaProducao> list = service.buscarTodos();
 		List<SistemaProducaoDTO> listDto = list.stream().map(obj -> new SistemaProducaoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
-	}
+	}*/
 	
-	//Paginação de sistemas só pode ser feita por usuários ADMIN
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(value="/page",method=RequestMethod.GET)
-	public ResponseEntity<Page<SistemaProducaoDTO>> findPage(
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<Page<SistemaProducao>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="instante") String orderBy, 
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue="DESC") String direction) {
 		Page<SistemaProducao> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<SistemaProducaoDTO> listDto = list.map(obj -> new SistemaProducaoDTO(obj));
-		return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(list);
 	}
 	
 }

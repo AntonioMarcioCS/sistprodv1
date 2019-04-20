@@ -1,13 +1,14 @@
 package com.antoniomarciocs.sistprodv1.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class SistemaNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	private String nome;
-	//private Date data;
+	private Date data;
 	private Double comprimento;
 	private Double largura;
 	
@@ -27,6 +28,14 @@ public class SistemaNewDTO implements Serializable {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	public void setNome(String nome) {

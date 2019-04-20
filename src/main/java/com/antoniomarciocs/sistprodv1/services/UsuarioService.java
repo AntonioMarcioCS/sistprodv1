@@ -31,6 +31,7 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repo; 
 	
+	//Busca verificando o perfil e o ID do usuário
 	public Usuario buscar(Integer id){
 		UserSS user = UserService.authenticated();
 		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
@@ -41,6 +42,18 @@ public class UsuarioService {
 		return obj.orElseThrow(() -> new ObjectNotFountException("Objeto não encontrado! ID:"+id+ " Nome:"
 		+Usuario.class.getName()));
 	}
+	
+	//Busca por ID mas sem diferenciar Usuario por perfil, está sendo usado no find page de SistemaProducaoService
+	public Usuario find(Integer id){
+		UserSS user = UserService.authenticated();
+		if (user==null || !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		Optional<Usuario> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFountException("Objeto não encontrado! ID:"+id+ " Nome:"
+		+Usuario.class.getName()));
+	}
+	
 	@Transactional
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
