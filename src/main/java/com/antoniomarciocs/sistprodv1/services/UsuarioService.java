@@ -43,6 +43,23 @@ public class UsuarioService {
 		+Usuario.class.getName()));
 	}
 	
+	public List<Usuario> buscarTodos(){
+		return repo.findAll();
+	}
+	
+	public Usuario findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Usuario obj = repo.findByEmail(email);
+		if(obj ==null) {
+			throw new ObjectNotFountException(
+					"Objeto não encontrado! Id:" +user.getId()+ " Tipo: " +Usuario.class.getName());
+		}
+		return obj;
+	}
 	//Busca por ID mas sem diferenciar Usuario por perfil, está sendo usado no find page de SistemaProducaoService
 	public Usuario find(Integer id){
 		UserSS user = UserService.authenticated();
@@ -76,9 +93,7 @@ public class UsuarioService {
 		}
 	}
 	
-	public List<Usuario> buscarTodos(){
-		return repo.findAll();
-	}
+	
 	
 	public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
