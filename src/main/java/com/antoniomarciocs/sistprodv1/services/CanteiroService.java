@@ -9,9 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.Canteiro;
-import com.antoniomarciocs.sistprodv1.domain.Setor;
+import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
-import com.antoniomarciocs.sistprodv1.repositories.SetorRepository;
+import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
 
 @Service
@@ -22,18 +22,24 @@ public class CanteiroService {
 	private CanteiroRepository canteiroRepo;
 	
 	@Autowired
-	private SetorRepository setorRepo;
+	private SistemaProducaoRepository sistemaRepo;
 	
 	public Canteiro find(Integer id) {
 		Optional<Canteiro> obj = canteiroRepo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Canteiro.class.getName()));
 	}
+	
 
+	public List<Canteiro> findBySistema(Integer sistemaId) {
+		return canteiroRepo.findCanteiros(sistemaId);
+	}
+	
+	
 	public Page<Canteiro> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		List<Setor> setores = setorRepo.findAllById(ids);
-		return canteiroRepo.findDistinctByNomeContainingAndSestoresIn(nome, setores, pageRequest);	
+		List<SistemaProducao> sistemas = sistemaRepo.findAllById(ids);
+		return canteiroRepo.findDistinctByNomeContainingAndSistemasIn(nome, sistemas, pageRequest);	
 	}
 	
 	public Canteiro insert(Canteiro obj) {
@@ -50,6 +56,6 @@ public class CanteiroService {
 	
 	private void atualizaDados(Canteiro newObj, Canteiro obj) {
 		newObj.setNome(obj.getNome());
-		newObj.setSetor(obj.getSetor());
+		newObj.setSistema(obj.getSistema());
 	}
 }

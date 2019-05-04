@@ -11,12 +11,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.antoniomarciocs.sistprodv1.domain.Canteiro;
-import com.antoniomarciocs.sistprodv1.domain.Setor;
+import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 
 @Repository
 public interface CanteiroRepository extends JpaRepository<Canteiro, Integer>  {
+	
 	@Transactional(readOnly=true)
-	@Query("SELECT DISTINCT obj FROM Canteiro obj INNER JOIN obj.setor setor WHERE obj.nome LIKE %:nome% AND setor IN :setor")
-	Page<Canteiro> findDistinctByNomeContainingAndSestoresIn(@Param("nome") String nome, @Param("setor") List<Setor> setores, Pageable pageRequest);
-
+	@Query("SELECT DISTINCT obj FROM Canteiro obj INNER JOIN obj.sistema sistema WHERE obj.nome LIKE %:nome% AND sistema IN :sistema")
+	Page<Canteiro> findDistinctByNomeContainingAndSistemasIn(@Param("nome") String nome, @Param("sistema") List<SistemaProducao> sistemas, Pageable pageRequest);
+	
+	@Transactional(readOnly=true)
+	@Query("SELECT obj FROM Canteiro obj WHERE obj.sistema.id = :sistemaId ORDER BY obj.nome")
+	public List<Canteiro> findCanteiros(@Param("sistemaId") Integer sistema_id);
 }

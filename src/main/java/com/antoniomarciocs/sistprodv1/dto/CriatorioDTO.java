@@ -15,7 +15,7 @@ public class CriatorioDTO implements Serializable {
 	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min=4, max=80, message="Escreva entre 4 e 80 caracteres")
 	private String nome;
-	private Integer setorId;
+	private Integer sistemaId;
 	
 	public CriatorioDTO() {		
 	}
@@ -23,7 +23,7 @@ public class CriatorioDTO implements Serializable {
 	public CriatorioDTO(Criatorio obj) {
 		id = obj.getId();
 		nome = obj.getNome();
-		setorId = obj.getSetor().getId();
+		sistemaId = obj.getSistema().getId();
 	}
 
 	public Integer getId() {
@@ -42,16 +42,12 @@ public class CriatorioDTO implements Serializable {
 		this.nome = nome;
 	}
 
-
-	public Integer getSetorId() {
-		return setorId;
+	public Integer getSistemaId() {
+		return sistemaId;
 	}
 
-	public void setSetorId(Integer setorId) {
-		this.setorId = setorId;
+	public void setSistemaId(Integer sistemaId) {
+		this.sistemaId = sistemaId;
 	}
-
 	
-	
-
 }

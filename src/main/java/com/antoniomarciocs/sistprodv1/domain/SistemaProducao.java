@@ -35,9 +35,10 @@ public class SistemaProducao implements Serializable {
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 	
+		
 	@JsonManagedReference
 	@OneToMany(mappedBy="sistema")
-	private List<Setor> setores  = new ArrayList<>();
+	private List<Canteiro> canteiros  = new ArrayList<>();
 	
 	public SistemaProducao() {
 		
@@ -92,15 +93,14 @@ public class SistemaProducao implements Serializable {
 		this.largura = largura;
 	}
 
-	
-	public List<Setor> getSetores() {
-		return setores;
+
+	public List<Canteiro> getCanteiros() {
+		return canteiros;
 	}
 
-	public void setSetores(List<Setor> setores) {
-		this.setores = setores;
+	public void setCanteiros(List<Canteiro> canteiros) {
+		this.canteiros = canteiros;
 	}
-	
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -134,7 +134,6 @@ public class SistemaProducao implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 	
 }

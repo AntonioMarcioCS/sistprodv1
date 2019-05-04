@@ -35,18 +35,17 @@ public class Criatorio implements Serializable {
 	@JsonManagedReference
 	@OneToMany(mappedBy="criatorio")
 	private List<Animal> animais = new ArrayList<>();
-	
+		
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="setor_id")
-	private Setor setor;
-	
+	@JoinColumn(name="sistema_id")
+	private SistemaProducao sistema;
 	
 	public Criatorio() {
 		
 	}
 
-	public Criatorio(Integer id, String nome, TipoCriatorio tipo, Double comprimento, Double largura, Double profundidade, Setor setor) {
+	public Criatorio(Integer id, String nome, TipoCriatorio tipo, Double comprimento, Double largura, Double profundidade, SistemaProducao sistema) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -54,7 +53,7 @@ public class Criatorio implements Serializable {
 		this.comprimento = comprimento;
 		this.largura = largura;
 		this.profundidade = profundidade;
-		this.setor = setor;
+		this.sistema = sistema;
 	}
 
 	public Integer getId() {
@@ -111,14 +110,14 @@ public class Criatorio implements Serializable {
 		this.profundidade = profundidade;
 	}
 	
-	public Setor getSetor() {
-		return setor;
+	public SistemaProducao getSistema() {
+		return sistema;
 	}
 
-	public void setSetor(Setor setor) {
-		this.setor = setor;
+	public void setSistema(SistemaProducao sistema) {
+		this.sistema = sistema;
 	}
-	
+
 	public List<Animal> getAnimais() {
 		return animais;
 	}

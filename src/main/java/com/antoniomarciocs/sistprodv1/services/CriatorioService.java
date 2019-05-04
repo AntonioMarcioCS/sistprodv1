@@ -8,10 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+
 import com.antoniomarciocs.sistprodv1.domain.Criatorio;
-import com.antoniomarciocs.sistprodv1.domain.Setor;
+import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
-import com.antoniomarciocs.sistprodv1.repositories.SetorRepository;
+import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
 
 @Service
@@ -22,18 +23,22 @@ public class CriatorioService {
 	private CriatorioRepository criatorioRepo;
 	
 	@Autowired
-	private SetorRepository setorRepo;
+	private SistemaProducaoRepository sistemaRepo;
 	
 	public Criatorio find(Integer id) {
 		Optional<Criatorio> obj = criatorioRepo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Criatorio.class.getName()));
 	}
-
+	
+	public List<Criatorio> findBySistema(Integer sistemaId) {
+		return criatorioRepo.findCriatorios(sistemaId);
+	}
+	
 	public Page<Criatorio> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		List<Setor> setores = setorRepo.findAllById(ids);
-		return criatorioRepo.findDistinctByNomeContainingAndSestoresIn(nome, setores, pageRequest);	
+		List<SistemaProducao> sistemas = sistemaRepo.findAllById(ids);
+		return criatorioRepo.findDistinctByNomeContainingAndSistemasIn(nome, sistemas, pageRequest);	
 	}
 	
 	public Criatorio insert(Criatorio obj) {
@@ -50,6 +55,6 @@ public class CriatorioService {
 	
 	private void atualizaDados(Criatorio newObj, Criatorio obj) {
 		newObj.setNome(obj.getNome());
-		newObj.setSetor(obj.getSetor());
+		newObj.setSistema(obj.getSistema());
 	}
 }

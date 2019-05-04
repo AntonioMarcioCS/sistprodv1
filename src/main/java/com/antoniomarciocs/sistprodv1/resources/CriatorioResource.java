@@ -45,13 +45,13 @@ public class CriatorioResource {
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<CriatorioDTO>> findPage(
 			@RequestParam(value="nome", defaultValue="") String nome, 
-			@RequestParam(value="setores", defaultValue="") String setores, 
+			@RequestParam(value="sistemas", defaultValue="") String sistemas, 
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
 		String nomeDecoded = URL.decodeParam(nome);
-		List<Integer> ids = URL.decodeIntList(setores);
+		List<Integer> ids = URL.decodeIntList(sistemas);
 		Page<Criatorio> list = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
 		Page<CriatorioDTO> listDto = list.map(obj -> new CriatorioDTO(obj));  
 		return ResponseEntity.ok().body(listDto);

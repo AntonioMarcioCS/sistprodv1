@@ -45,13 +45,13 @@ public class CanteiroResource {
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<CanteiroDTO>> findPage(
 			@RequestParam(value="nome", defaultValue="") String nome, 
-			@RequestParam(value="setores", defaultValue="") String setores, 
+			@RequestParam(value="sistemas", defaultValue="") String sistemas, 
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
 		String nomeDecoded = URL.decodeParam(nome);
-		List<Integer> ids = URL.decodeIntList(setores);
+		List<Integer> ids = URL.decodeIntList(sistemas);
 		Page<Canteiro> list = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
 		Page<CanteiroDTO> listDto = list.map(obj -> new CanteiroDTO(obj));  
 		return ResponseEntity.ok().body(listDto);

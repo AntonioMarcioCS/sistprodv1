@@ -28,8 +28,8 @@ public class Canteiro implements Serializable {
 	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="setor_id")
-	private Setor setor;
+	@JoinColumn(name="sistema_id")
+	private SistemaProducao sistema;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="canteiro")
@@ -39,13 +39,13 @@ public class Canteiro implements Serializable {
 		
 	}
 
-	public Canteiro(Integer id, String nome, Double comprimento, Double largaura, Setor setor) {
+	public Canteiro(Integer id, String nome, Double comprimento, Double largaura, SistemaProducao sistema) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.comprimento = comprimento;
 		this.largaura = largaura;
-		this.setor = setor;
+		this.sistema = sistema;
 	}
 
 	public Integer getId() {
@@ -79,13 +79,13 @@ public class Canteiro implements Serializable {
 	public void setLargaura(Double largaura) {
 		this.largaura = largaura;
 	}
-	
-	public Setor getSetor() {
-		return setor;
+		
+	public SistemaProducao getSistema() {
+		return sistema;
 	}
 
-	public void setSetor(Setor setor) {
-		this.setor = setor;
+	public void setSistema(SistemaProducao sistema) {
+		this.sistema = sistema;
 	}
 	
 	public List<Plantio> getPlantis() {

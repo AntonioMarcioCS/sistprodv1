@@ -17,14 +17,15 @@ import com.antoniomarciocs.sistprodv1.domain.Fertilizante;
 import com.antoniomarciocs.sistprodv1.domain.Grupo;
 import com.antoniomarciocs.sistprodv1.domain.Irrigacao;
 import com.antoniomarciocs.sistprodv1.domain.Plantio;
-import com.antoniomarciocs.sistprodv1.domain.Setor;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.domain.Usuario;
+
 import com.antoniomarciocs.sistprodv1.domain.enums.Perfil;
 import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoAnimal;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoCriatorio;
 import com.antoniomarciocs.sistprodv1.domain.enums.TipoUsuario;
+
 import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
@@ -34,7 +35,6 @@ import com.antoniomarciocs.sistprodv1.repositories.FertilizanteRepository;
 import com.antoniomarciocs.sistprodv1.repositories.GrupoRepository;
 import com.antoniomarciocs.sistprodv1.repositories.IrrigacaoRepository;
 import com.antoniomarciocs.sistprodv1.repositories.PlantioRepository;
-import com.antoniomarciocs.sistprodv1.repositories.SetorRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
 import com.antoniomarciocs.sistprodv1.repositories.UsuarioRepository;
 
@@ -46,8 +46,7 @@ public class DBService {
 	private SistemaProducaoRepository sistemaProducaoRepository;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	@Autowired
-	private SetorRepository setorRepository;
+	
 	@Autowired
 	private CanteiroRepository canteiroRepository;
 	@Autowired
@@ -85,16 +84,15 @@ public class DBService {
 		SistemaProducao sistema5 = new SistemaProducao(null,"Sisteminha Cinco",sdf.parse("10/04/2019 22:31"),100.0, 80.0,user2);
 		SistemaProducao sistema6 = new SistemaProducao(null,"Sisteminha Seis",sdf.parse("10/04/2019 22:31"),50.0, 50.0,user3);
 	
-		Setor setor1 = new Setor(null,"Hortalícias","Sul", sistema1);
-		Setor setor2 = new Setor(null,"Galinhas","Norte", sistema2);
-		Setor setor3 = new Setor(null,"Porcos","Norte", sistema6);
-		
-		Canteiro canteiro1 = new Canteiro(null,"Canteiro do Repolho", 100.0, 20.0, setor1);
-		Canteiro canteiro2 = new Canteiro(null,"Canteiro do Alface", 100.0, 20.0, setor1);
 				
-		Criatorio criatorio1 = new Criatorio(null,"Tanque de Peixes",TipoCriatorio.TANQUE, 100.0, 20.0, 10.0, setor2);
-		Criatorio criatorio2 = new Criatorio(null,"Poleiro das galinhas",TipoCriatorio.POLEIRO, 100.0, 20.0, 0.0, setor2);
-		Criatorio criatorio3 = new Criatorio(null, "Chiqueiro 1", TipoCriatorio.CHIQUEIRO, 20.0, 10.0, 0.0, setor3);
+		Canteiro canteiro1 = new Canteiro(null,"Canteiro do Repolho", 100.0, 20.0, sistema1);
+		Canteiro canteiro2 = new Canteiro(null,"Canteiro do Alface", 100.0, 20.0, sistema2);
+		Canteiro canteiro3 = new Canteiro(null,"Canteiro 1 de Levi", 100.0, 20.0, sistema3);
+		
+				
+		Criatorio criatorio1 = new Criatorio(null,"Tanque de Peixes",TipoCriatorio.TANQUE, 100.0, 20.0, 10.0, sistema1);
+		Criatorio criatorio2 = new Criatorio(null,"Poleiro das galinhas",TipoCriatorio.POLEIRO, 100.0, 20.0, 0.0, sistema1);
+		Criatorio criatorio3 = new Criatorio(null, "Chiqueiro 1", TipoCriatorio.CHIQUEIRO, 20.0, 10.0, 0.0, sistema6);
 		
 		
 		Grupo grupo1 = new Grupo(null, "Hortalícias");
@@ -112,6 +110,7 @@ public class DBService {
 		Plantio plantio1 = new Plantio(null, "Cebolas", sdf.parse("13/02/2019 07:44"), 50, StatusRetirada.DISPONIVEL, canteiro1, cultura1);
 		Plantio plantio2 = new Plantio(null, "Coentro", sdf.parse("13/02/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura2);
 		Plantio plantio3 = new Plantio(null, "Milho", sdf.parse("13/02/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura3);
+		Plantio plantio1Levi = new Plantio(null, "Milho", sdf.parse("02/05/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro3, cultura3);
 		
 		Fertilizante fertilizacao1 = new Fertilizante(null, "Adubo orgânico", sdf.parse("07/02/2019 12:58"), 2, plantio2);
 		Fertilizante fertilizacao2 = new Fertilizante(null, "Adubo orgânico", sdf.parse("13/02/2019 12:58"), 2, plantio2);
@@ -144,22 +143,18 @@ public class DBService {
 		user1.getSistemas().addAll(Arrays.asList(sistema1,sistema2,sistema3));
 		user2.getSistemas().addAll(Arrays.asList(sistema4,sistema5));
 		user3.getSistemas().addAll(Arrays.asList(sistema6));
-		sistema1.getSetores().addAll(Arrays.asList(setor1,setor2));
-		setor1.getCanteiros().addAll(Arrays.asList(canteiro1,canteiro2));
-		setor2.getCriatorios().addAll(Arrays.asList(criatorio1,criatorio2));
 		criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
 		criatorio3.getAnimais().addAll(Arrays.asList(porquinhos));
 			
 		usuarioRepository.saveAll(Arrays.asList(user1,user2,user3));
 		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2,sistema3, sistema4, sistema5, sistema6));
-		setorRepository.saveAll(Arrays.asList(setor1,setor2,setor3));
-		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2));
+		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2,canteiro3));
 		criatorioRepository.saveAll(Arrays.asList(criatorio1,criatorio2));
 		animalRepository.saveAll(Arrays.asList(animal1,animal2));
 		grupoRepository.saveAll(Arrays.asList(grupo1,grupo2));
 		culturaRepository.saveAll(Arrays.asList(cultura1,cultura2,cultura3));
 		
-		plantioRepository.saveAll(Arrays.asList(plantio1,plantio2,plantio3));
+		plantioRepository.saveAll(Arrays.asList(plantio1,plantio2,plantio3,plantio1Levi));
 		irrigacaoRepository.saveAll(Arrays.asList(irrigacao1,irrigacao2,irrigacao3,irrigacao4));
 		fertilizanteRepository.saveAll(Arrays.asList(fertilizacao1,fertilizacao2,fertilizacao3,fertilizacao4));
 		defensivoRepository.saveAll(Arrays.asList(defensivo1,defensivo2,defensivo3));

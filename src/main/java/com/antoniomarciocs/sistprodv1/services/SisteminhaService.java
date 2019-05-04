@@ -12,18 +12,18 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 import com.antoniomarciocs.sistprodv1.domain.Usuario;
-import com.antoniomarciocs.sistprodv1.dto.SistemaProducaoDTO;
-import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
+import com.antoniomarciocs.sistprodv1.dto.SisteminhaDTO;
+import com.antoniomarciocs.sistprodv1.repositories.SisteminhaRepository;
 import com.antoniomarciocs.sistprodv1.security.UserSS;
 import com.antoniomarciocs.sistprodv1.services.exceptions.AuthorizationException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.DataIntegrityException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
 
 @Service
-public class SistemaProducaoService {
+public class SisteminhaService {
 
 	@Autowired
-	private SistemaProducaoRepository sistemaRepository; 
+	private SisteminhaRepository sisteminhaRepository; 
 		
 	@Autowired
 	private UsuarioService usuarioService;
@@ -35,7 +35,7 @@ public class SistemaProducaoService {
 		if (user==null) {
 			throw new AuthorizationException("Acesso negado: faça login!");
 		}
-		Optional<SistemaProducao> obj = sistemaRepository.findById(id);
+		Optional<SistemaProducao> obj = sisteminhaRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
 				"Objeto não encontrado! ID: "+id+ " Nome: "+SistemaProducao.class.getName()));
 	}
@@ -46,27 +46,27 @@ public class SistemaProducaoService {
 			throw new AuthorizationException("Acesso negado: faça login!");
 		}
 		Usuario usuario = usuarioService.find(user.getId());
-		SistemaProducao obj = sistemaRepository.findByUsuario(usuario);
+		SistemaProducao obj = sisteminhaRepository.findByUsuario(usuario);
 		return obj;
 	}*/
 	
 	public SistemaProducao insert(SistemaProducao obj) {
 		obj.setId(null);
 		obj.setData(new Date());
-		obj = sistemaRepository.save(obj);	
+		obj = sisteminhaRepository.save(obj);	
 		return obj;
 	}
 	
 	public SistemaProducao update(SistemaProducao obj) {
 		SistemaProducao newObj = buscar(obj.getId());
 		atualizaDados(newObj, obj);
-		return sistemaRepository.save(newObj);
+		return sisteminhaRepository.save(newObj);
 	}
 	
 	public void delete(Integer id) {
 		buscar(id);
 		try {
-			sistemaRepository.deleteById(id);
+			sisteminhaRepository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um Sistema, ele possui várias dependências");
 		}
@@ -77,20 +77,15 @@ public class SistemaProducaoService {
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado: faça login!");
 		}
-		return sistemaRepository.findAll();
+		return sisteminhaRepository.findAll();
 	}
 	
-	public SistemaProducao fromDTO(SistemaProducaoDTO objDTO) {
-		Usuario user = usuarioService.find(objDTO.getUsuarioId());
-		return new SistemaProducao(objDTO.getId(), objDTO.getNome(), objDTO.getData() , objDTO.getComprimento(), objDTO.getLargura(), user);
-	}
-	
-	
-	/*public SistemaProducao fromDTO(SistemaNewDTO objDTO) {
+		
+	public SistemaProducao fromDTO(SisteminhaDTO objDTO) {
 		Usuario user = usuarioService.find(objDTO.getUsuarioId());
 		SistemaProducao sistema = new SistemaProducao(objDTO.getId(), objDTO.getNome(), objDTO.getData(), objDTO.getComprimento(), objDTO.getLargura(), user);
 		return sistema;
-	}*/
+	}
 		
 	private void atualizaDados(SistemaProducao newObj, SistemaProducao obj) {
 		newObj.setNome(obj.getNome());
@@ -98,22 +93,16 @@ public class SistemaProducaoService {
 		newObj.setLargura(obj.getLargura());
 	}
 	
-	/*Este findPage permite ver todos os sistemas
-	public Page<SistemaProducao> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
-				orderBy);
-		return sistemaRepository.findAll(pageRequest);		
-	}*/
 	
 	/*Este findPage só mostra os sistemas do usuário específico*/
-	public Page<SistemaProducao> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<SisteminhaDTO> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		UserSS user = UserService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado: faça login!");
 		}
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		Usuario usuario = usuarioService.find(user.getId());
-		return sistemaRepository.findByUsuario(usuario, pageRequest);
+		return sisteminhaRepository.findByUsuario(usuario, pageRequest);
 	}
 	
 	

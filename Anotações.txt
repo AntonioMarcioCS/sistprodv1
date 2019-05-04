@@ -9,4 +9,10 @@ Para implementar o esqueci a senha da aula 75 é preciso fazer a parte de seriço 
 Refazer os Endpoints de Criatórios, Canteiros, Plantios, Defensivos, Fertilzantes, Irrigação. 
 Fazer de maneira mais simples, como no exemplo da aula 94.
 
+
+O vídeo carregando imagem de produto(131) serve de exemplo para carregar imagens dos plantios.
+
+
+Criar a Página Sistema, e nela colocar os botões para listar os Canteiros e Criatórios, como também as opções de
+adicionar canteiros e criatorios.
  
