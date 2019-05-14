@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -29,6 +31,9 @@ public class Cultura implements Serializable {
 	@JoinTable(name ="CULTURA_GRUPO", joinColumns = @JoinColumn(name="cultura_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos = new ArrayList<>();
 	
+	@JsonBackReference
+	@OneToMany(mappedBy="cultura")
+	private List<Plantio> plantios = new ArrayList<>();
 	public Cultura() {
 		
 	}

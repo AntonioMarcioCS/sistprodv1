@@ -11,17 +11,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.antoniomarciocs.sistprodv1.domain.Plantio;
-import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.antoniomarciocs.sistprodv1.domain.Canteiro;
 import com.antoniomarciocs.sistprodv1.domain.Cultura;
+import com.antoniomarciocs.sistprodv1.domain.Plantio;
+import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.antoniomarciocs.sistprodv1.dto.PlantioDTO;
-import com.antoniomarciocs.sistprodv1.repositories.PlantioRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
+import com.antoniomarciocs.sistprodv1.repositories.PlantioRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
 
 @Service
 public class PlantioService {
+
 	@Autowired
 	private PlantioRepository plantioRepo;
 	
@@ -33,7 +34,7 @@ public class PlantioService {
 	
 	@Autowired
 	private CulturaService culturaService;
-	
+
 	public Plantio find(Integer id) {
 		Optional<Plantio> obj = plantioRepo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
@@ -45,16 +46,13 @@ public class PlantioService {
 	}
 	
 	public Plantio fromDTO(PlantioDTO objDTO) {
-		
 		Canteiro canteiro = canteiroService.find(objDTO.getCanteiroId());
 		Cultura cultura = culturaService.find(objDTO.getCulturaId());
 		objDTO.setData(new Date());
-		
 		Calendar colheita = Calendar.getInstance();
 		colheita.setTime(objDTO.getData()); 
 		colheita.add(Calendar.DAY_OF_MONTH,cultura.getTempo());
-		
-		return new Plantio(objDTO.getId(),objDTO.getNome(),objDTO.getData(),colheita.getTime() ,objDTO.getQtd(), StatusRetirada.DISPONIVEL, canteiro,cultura);
+		return new Plantio(objDTO.getId(),objDTO.getNome(),objDTO.getData(), colheita.getTime(), objDTO.getQtd(), StatusRetirada.DISPONIVEL, canteiro, cultura);
 	}
 	
 	public Page<Plantio> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
@@ -67,7 +65,6 @@ public class PlantioService {
 		obj.setId(null);
 		return plantioRepo.save(obj);
 	}
-
 	
 	public Plantio update(Plantio obj) {
 		Plantio newObj = find(obj.getId());
@@ -78,5 +75,6 @@ public class PlantioService {
 	private void atualizaDados(Plantio newObj, Plantio obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setCanteiro(obj.getCanteiro());
+		newObj.setCultura(obj.getCultura());
 	}
 }

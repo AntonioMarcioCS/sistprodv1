@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.antoniomarciocs.sistprodv1.domain.Cultura;
 import com.antoniomarciocs.sistprodv1.dto.CulturaDTO;
 import com.antoniomarciocs.sistprodv1.repositories.CulturaRepository;
-import com.antoniomarciocs.sistprodv1.security.UserSS;
-import com.antoniomarciocs.sistprodv1.services.exceptions.AuthorizationException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.DataIntegrityException;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
 
@@ -28,10 +26,6 @@ public class CulturaService {
 	
 	
 	public Cultura find(Integer id){
-		UserSS user = UserService.authenticated();
-		if (user==null || !id.equals(user.getId())) {
-			throw new AuthorizationException("Acesso negado");
-		}
 		Optional<Cultura> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException("Objeto não encontrado! ID:"+id+ " Nome:"
 		+Cultura.class.getName()));

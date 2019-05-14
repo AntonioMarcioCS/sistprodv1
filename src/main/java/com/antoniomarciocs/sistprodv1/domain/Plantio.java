@@ -43,6 +43,7 @@ public class Plantio implements Serializable {
 	@JoinColumn(name="cultura_id")
 	private Cultura cultura;
 	
+	
 	@JsonManagedReference
 	@OneToMany(mappedBy="plantio")
 	List<Irrigacao> irrigacoes = new ArrayList<>();
@@ -184,9 +185,5 @@ public class Plantio implements Serializable {
 			return false;
 		return true;
 	}
-
 	
-	
-	
-
 }

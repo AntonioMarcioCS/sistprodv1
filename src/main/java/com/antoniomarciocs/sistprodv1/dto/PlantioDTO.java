@@ -18,7 +18,8 @@ public class PlantioDTO implements Serializable {
 	private Integer canteiroId;
 	private Integer culturaId;
 	
-	public PlantioDTO() {		
+	public PlantioDTO() {
+		
 	}
 
 	public PlantioDTO(Plantio obj) {
@@ -45,15 +46,15 @@ public class PlantioDTO implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	 public Date getData() {
+
+	public Date getData() {
 		return data;
 	}
 
 	public void setData(Date data) {
 		this.data = data;
 	}
-	
+
 	public Integer getQtd() {
 		return qtd;
 	}
@@ -61,13 +62,13 @@ public class PlantioDTO implements Serializable {
 	public void setQtd(Integer qtd) {
 		this.qtd = qtd;
 	}
-	
+
 	public Integer getCanteiroId() {
 		return canteiroId;
 	}
 
-	public void setCanteiroId(Integer setorId) {
-		this.canteiroId = setorId;
+	public void setCanteiroId(Integer canteiroId) {
+		this.canteiroId = canteiroId;
 	}
 
 	public Integer getCulturaId() {
@@ -77,5 +78,5 @@ public class PlantioDTO implements Serializable {
 	public void setCulturaId(Integer culturaId) {
 		this.culturaId = culturaId;
 	}
-
+	
 }
