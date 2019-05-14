@@ -24,7 +24,7 @@ public class Canteiro implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double comprimento;
-	private Double largaura;
+	private Double largura;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -33,18 +33,18 @@ public class Canteiro implements Serializable {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="canteiro")
-	private List<Plantio> plantis = new ArrayList<>();
+	private List<Plantio> plantios = new ArrayList<>();
 		
 	public Canteiro() {
 		
 	}
 
-	public Canteiro(Integer id, String nome, Double comprimento, Double largaura, SistemaProducao sistema) {
+	public Canteiro(Integer id, String nome, Double comprimento, Double largura, SistemaProducao sistema) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.comprimento = comprimento;
-		this.largaura = largaura;
+		this.largura = largura;
 		this.sistema = sistema;
 	}
 
@@ -72,12 +72,12 @@ public class Canteiro implements Serializable {
 		this.comprimento = comprimento;
 	}
 
-	public Double getLargaura() {
-		return largaura;
+	public Double getLargura() {
+		return largura;
 	}
 
-	public void setLargaura(Double largaura) {
-		this.largaura = largaura;
+	public void setLargura(Double largaura) {
+		this.largura = largaura;
 	}
 		
 	public SistemaProducao getSistema() {
@@ -88,12 +88,12 @@ public class Canteiro implements Serializable {
 		this.sistema = sistema;
 	}
 	
-	public List<Plantio> getPlantis() {
-		return plantis;
+	public List<Plantio> getPlantios() {
+		return plantios;
 	}
 
-	public void setPlantis(List<Plantio> plantis) {
-		this.plantis = plantis;
+	public void setPlantios(List<Plantio> plantis) {
+		this.plantios = plantis;
 	}
 
 	@Override

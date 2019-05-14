@@ -22,6 +22,7 @@ public class Cultura implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Integer tempo;
 	
 	@JsonManagedReference
 	@ManyToMany
@@ -32,10 +33,12 @@ public class Cultura implements Serializable {
 		
 	}
 
-	public Cultura(Integer id, String nome) {
+	public Cultura(Integer id, String nome, Integer tempo) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.tempo = tempo;
+		
 	}
 
 	public Integer getId() {
@@ -60,6 +63,14 @@ public class Cultura implements Serializable {
 
 	public void setGrupos(List<Grupo> grupos) {
 		this.grupos = grupos;
+	}	
+
+	public Integer getTempo() {
+		return tempo;
+	}
+
+	public void setTempo(Integer tempo) {
+		this.tempo = tempo;
 	}
 
 	@Override

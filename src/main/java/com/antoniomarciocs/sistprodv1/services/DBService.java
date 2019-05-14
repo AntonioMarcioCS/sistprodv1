@@ -3,6 +3,7 @@ package com.antoniomarciocs.sistprodv1.services;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -97,20 +98,27 @@ public class DBService {
 		
 		Grupo grupo1 = new Grupo(null, "Hortalícias");
 		Grupo grupo2 = new Grupo(null, "Grãos");
-		Cultura cultura1 = new Cultura(null, "Cebola");
-		Cultura cultura2 = new Cultura(null, "Coentro");
-		Cultura cultura3 = new Cultura(null, "Milho");
+		Cultura cultura1 = new Cultura(null, "Cebola", 120);
+		Cultura cultura2 = new Cultura(null, "Coentro", 70);
+		Cultura cultura3 = new Cultura(null, "Milho", 95);
 				
 		grupo1.getCulturas().addAll(Arrays.asList(cultura1, cultura2));
-		grupo2.getCulturas().addAll(Arrays.asList(cultura3));
+		grupo2.getCulturas().addAll(Arrays.asList(cultura3,cultura2));
 		cultura1.getGrupos().addAll(Arrays.asList(grupo1));
 		cultura2.getGrupos().addAll(Arrays.asList(grupo2));
+		cultura3.getGrupos().addAll(Arrays.asList(grupo2));
+		
+		//Inserindo previsão de colheita:
+		Calendar colheita = Calendar.getInstance();
+		colheita.setTime(sdf.parse("07/05/2019 14:40")); 
+		colheita.add(Calendar.DAY_OF_MONTH,cultura1.getTempo());
 		
 		
-		Plantio plantio1 = new Plantio(null, "Cebolas", sdf.parse("13/02/2019 07:44"), 50, StatusRetirada.DISPONIVEL, canteiro1, cultura1);
-		Plantio plantio2 = new Plantio(null, "Coentro", sdf.parse("13/02/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura2);
-		Plantio plantio3 = new Plantio(null, "Milho", sdf.parse("13/02/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura3);
-		Plantio plantio1Levi = new Plantio(null, "Milho", sdf.parse("02/05/2019 07:48"), 20, StatusRetirada.DISPONIVEL, canteiro3, cultura3);
+		Plantio plantio1 = new Plantio(null, "Cebolas", sdf.parse("13/02/2019 07:44"),colheita.getTime(), 50, StatusRetirada.DISPONIVEL, canteiro1, cultura1);
+		Plantio plantio2 = new Plantio(null, "Coentro", sdf.parse("13/02/2019 07:48"),colheita.getTime(), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura2);
+		Plantio plantio3 = new Plantio(null, "Milho", sdf.parse("13/02/2019 07:48"), colheita.getTime(),20, StatusRetirada.DISPONIVEL, canteiro2, cultura3);
+		Plantio plantio1Levi = new Plantio(null, "Milho", sdf.parse("02/05/2019 07:48"),colheita.getTime(), 20,StatusRetirada.DISPONIVEL, canteiro3, cultura3);
+		Plantio plantio5 = new Plantio(null, "Milho", sdf.parse("13/02/2019 13:10"), colheita.getTime(),20, StatusRetirada.DISPONIVEL, canteiro3, cultura1);
 		
 		Fertilizante fertilizacao1 = new Fertilizante(null, "Adubo orgânico", sdf.parse("07/02/2019 12:58"), 2, plantio2);
 		Fertilizante fertilizacao2 = new Fertilizante(null, "Adubo orgânico", sdf.parse("13/02/2019 12:58"), 2, plantio2);
@@ -154,7 +162,7 @@ public class DBService {
 		grupoRepository.saveAll(Arrays.asList(grupo1,grupo2));
 		culturaRepository.saveAll(Arrays.asList(cultura1,cultura2,cultura3));
 		
-		plantioRepository.saveAll(Arrays.asList(plantio1,plantio2,plantio3,plantio1Levi));
+		plantioRepository.saveAll(Arrays.asList(plantio1,plantio2,plantio3,plantio1Levi,plantio5));
 		irrigacaoRepository.saveAll(Arrays.asList(irrigacao1,irrigacao2,irrigacao3,irrigacao4));
 		fertilizanteRepository.saveAll(Arrays.asList(fertilizacao1,fertilizacao2,fertilizacao3,fertilizacao4));
 		defensivoRepository.saveAll(Arrays.asList(defensivo1,defensivo2,defensivo3));

@@ -70,7 +70,7 @@ public class CulturaService {
 	}
 	
 	public Cultura fromDTO(CulturaDTO objDTO) {
-		return new Cultura(objDTO.getId(), objDTO.getNome());
+		return new Cultura(objDTO.getId(), objDTO.getNome(), objDTO.getTempo());
 	}
 	
 	private void atualizaDados(Cultura newObj, Cultura obj) {

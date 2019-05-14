@@ -35,7 +35,8 @@ public class CanteiroResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Canteiro obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CanteiroDTO objDto) {
+		Canteiro obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();

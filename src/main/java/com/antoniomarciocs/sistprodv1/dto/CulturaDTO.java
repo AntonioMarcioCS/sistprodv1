@@ -16,7 +16,7 @@ public class CulturaDTO implements Serializable {
 	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min=5, max=80, message="Escreva entre 5 e 80 caracteres")
 	private String nome;
-
+	private Integer tempo;
 	
 	public CulturaDTO() {		
 	}
@@ -39,6 +39,12 @@ public class CulturaDTO implements Serializable {
 		this.nome = nome;
 	}
 
+	public Integer getTempo() {
+		return tempo;
+	}
 
+	public void setTempo(Integer tempo) {
+		this.tempo = tempo;
+	}
 
 }

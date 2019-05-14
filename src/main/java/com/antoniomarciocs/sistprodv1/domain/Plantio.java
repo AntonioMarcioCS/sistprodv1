@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 
 import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -25,7 +26,10 @@ public class Plantio implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date data;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date colheita;
 	private Integer qtd;
 	private Integer status;
 	
@@ -55,12 +59,13 @@ public class Plantio implements Serializable {
 		
 	}
 
-	public Plantio(Integer id, String nome, Date data, Integer qtd, StatusRetirada status, Canteiro canteiro,
+	public Plantio(Integer id, String nome, Date data, Date colheita, Integer qtd, StatusRetirada status, Canteiro canteiro,
 			Cultura cultura) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.data = data;
+		this.colheita = colheita;
 		this.qtd = qtd;
 		this.status = (status==null) ? null : status.getCod();
 		this.canteiro = canteiro;
@@ -89,6 +94,14 @@ public class Plantio implements Serializable {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Date getColheita() {
+		return colheita;
+	}
+
+	public void setColheita(Date colheita) {
+		this.colheita = colheita;
 	}
 
 	public Integer getQtd() {
@@ -171,6 +184,8 @@ public class Plantio implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 

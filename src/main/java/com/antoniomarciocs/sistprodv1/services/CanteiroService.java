@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.Canteiro;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
+import com.antoniomarciocs.sistprodv1.dto.CanteiroDTO;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
@@ -24,6 +25,9 @@ public class CanteiroService {
 	@Autowired
 	private SistemaProducaoRepository sistemaRepo;
 	
+	@Autowired
+	private SistemaProducaoService sistemaService;
+	
 	public Canteiro find(Integer id) {
 		Optional<Canteiro> obj = canteiroRepo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
@@ -35,6 +39,10 @@ public class CanteiroService {
 		return canteiroRepo.findCanteiros(sistemaId);
 	}
 	
+	public Canteiro fromDTO(CanteiroDTO objDTO) {
+		SistemaProducao sistema = sistemaService.buscar(objDTO.getSistemaId());
+		return new Canteiro(objDTO.getId(),objDTO.getNome(),objDTO.getComprimento(), objDTO.getLargura(), sistema);
+	}
 	
 	public Page<Canteiro> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);

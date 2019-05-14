@@ -15,6 +15,8 @@ public class CanteiroDTO implements Serializable {
 	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min=4, max=80, message="Escreva entre 4 e 80 caracteres")
 	private String nome;
+	private Double comprimento;
+	private Double largura;
 	private Integer sistemaId;
 	
 	public CanteiroDTO() {		
@@ -23,6 +25,8 @@ public class CanteiroDTO implements Serializable {
 	public CanteiroDTO(Canteiro obj) {
 		id = obj.getId();
 		nome = obj.getNome();
+		comprimento= obj.getComprimento();
+		largura = obj.getLargura();
 		sistemaId = obj.getSistema().getId();
 	}
 
@@ -36,6 +40,22 @@ public class CanteiroDTO implements Serializable {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public Double getComprimento() {
+		return comprimento;
+	}
+
+	public void setComprimento(Double comprimento) {
+		this.comprimento = comprimento;
+	}
+
+	public Double getLargura() {
+		return largura;
+	}
+
+	public void setLargura(Double largaura) {
+		this.largura = largaura;
 	}
 
 	public void setNome(String nome) {
