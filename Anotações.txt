@@ -1,18 +1,7 @@
-Ajeitar get e Post de Sistemas
 
-Para acrescentar previsibilidade de colheita assistir o vídeo Inserindo Pedido - aula 50
-
-Para implementar o esqueci a senha da aula 75 é preciso fazer a parte de seriço de email da seção 5.
-
-
-
-Refazer os Endpoints de Criatórios, Canteiros, Plantios, Defensivos, Fertilzantes, Irrigação. 
-Fazer de maneira mais simples, como no exemplo da aula 94.
+Para implementar o esqueci a senha da aula 75 é preciso fazer a parte de serviço de email da seção 5.
 
 
 O vídeo carregando imagem de produto(131) serve de exemplo para carregar imagens dos plantios.
 
-
-Criar a Página Sistema, e nela colocar os botões para listar os Canteiros e Criatórios, como também as opções de
-adicionar canteiros e criatorios.
  

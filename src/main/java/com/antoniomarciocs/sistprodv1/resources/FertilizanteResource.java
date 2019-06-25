@@ -35,25 +35,26 @@ public class FertilizanteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Fertilizante obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody FertilizanteDTO objDto) {
+		Fertilizante obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<FertilizanteDTO>> findPage(
-			@RequestParam(value="nome", defaultValue="") String nome, 
 			@RequestParam(value="plantio", defaultValue="") String plantio, 
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="orderBy", defaultValue="data") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
-		String nomeDecoded = URL.decodeParam(nome);
 		List<Integer> ids = URL.decodeIntList(plantio);
-		Page<Fertilizante> list = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
+		Page<Fertilizante> list = service.search(ids, page, linesPerPage, orderBy, direction);
 		Page<FertilizanteDTO> listDto = list.map(obj -> new FertilizanteDTO(obj));  
 		return ResponseEntity.ok().body(listDto);
 	}

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Fertilizante implements Serializable {
@@ -19,8 +20,9 @@ public class Fertilizante implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date data;
+	private String descricao;
 	private Integer qtd;
 	
 	@JsonBackReference
@@ -32,11 +34,11 @@ public class Fertilizante implements Serializable {
 		
 	}
 
-	public Fertilizante(Integer id, String nome, Date data, Integer qtd, Plantio plantio) {
+	public Fertilizante(Integer id, Date data,String descricao, Integer qtd, Plantio plantio) {
 		super();
 		this.id = id;
-		this.nome = nome;
 		this.data = data;
+		this.descricao = descricao;
 		this.qtd = qtd;
 		this.plantio = plantio;
 	}
@@ -49,20 +51,20 @@ public class Fertilizante implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public Date getData() {
 		return data;
 	}
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public Integer getQtd() {

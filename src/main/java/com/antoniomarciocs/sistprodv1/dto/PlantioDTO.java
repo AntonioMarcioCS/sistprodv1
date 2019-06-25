@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.validation.constraints.NotEmpty;
 
 import com.antoniomarciocs.sistprodv1.domain.Plantio;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PlantioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -13,7 +14,10 @@ public class PlantioDTO implements Serializable {
 	private Integer id;
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String nome;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date data;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date colheita;
 	private Integer qtd;
 	private Integer canteiroId;
 	private Integer culturaId;
@@ -26,6 +30,7 @@ public class PlantioDTO implements Serializable {
 		id = obj.getId();
 		nome = obj.getNome();
 		data = obj.getData();
+		colheita = obj.getColheita(); 
 		qtd = obj.getQtd();
 		canteiroId = obj.getCanteiro().getId();
 		culturaId = obj.getCultura().getId();
@@ -53,6 +58,14 @@ public class PlantioDTO implements Serializable {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Date getColheita() {
+		return colheita;
+	}
+
+	public void setColheita(Date colheita) {
+		this.colheita = colheita;
 	}
 
 	public Integer getQtd() {

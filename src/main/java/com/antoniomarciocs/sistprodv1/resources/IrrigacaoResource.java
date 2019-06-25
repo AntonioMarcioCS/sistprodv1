@@ -36,24 +36,27 @@ public class IrrigacaoResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Irrigacao obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody IrrigacaoDTO objDto) {
+		Irrigacao obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
+	
+	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<IrrigacaoDTO>> findPage(
-			@RequestParam(value="id", defaultValue="") String id, 
+			//@RequestParam(value="id", defaultValue="") String id, 
 			@RequestParam(value="plantio", defaultValue="") String plantio, 
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="orderBy", defaultValue="data") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
-		String idDecoded = URL.decodeParam(id);
+		//String idDecoded = URL.decodeParam(id);
 		List<Integer> ids = URL.decodeIntList(plantio);
-		Page<Irrigacao> list = service.search(idDecoded, ids, page, linesPerPage, orderBy, direction);
+		Page<Irrigacao> list = service.search(ids, page, linesPerPage, orderBy, direction);
 		Page<IrrigacaoDTO> listDto = list.map(obj -> new IrrigacaoDTO(obj));  
 		return ResponseEntity.ok().body(listDto);
 	}

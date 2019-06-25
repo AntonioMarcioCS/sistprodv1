@@ -45,10 +45,11 @@ public class Criatorio implements Serializable {
 		
 	}
 
-	public Criatorio(Integer id, String nome, TipoCriatorio tipo, Double comprimento, Double largura, Double profundidade, SistemaProducao sistema) {
+	public Criatorio(Integer id, String nome, Date data, TipoCriatorio tipo, Double comprimento, Double largura, Double profundidade, SistemaProducao sistema) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.data = data;
 		this.tipo = (tipo==null) ? null : tipo.getCod();
 		this.comprimento = comprimento;
 		this.largura = largura;

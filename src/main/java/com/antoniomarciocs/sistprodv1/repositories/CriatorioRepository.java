@@ -15,6 +15,7 @@ import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
 
 @Repository
 public interface CriatorioRepository extends JpaRepository<Criatorio, Integer>  {
+	
 	@Transactional(readOnly=true)
 	@Query("SELECT DISTINCT obj FROM Criatorio obj INNER JOIN obj.sistema sistema WHERE obj.nome LIKE %:nome% AND sistema IN :sistema")
 	Page<Criatorio> findDistinctByNomeContainingAndSistemasIn(@Param("nome") String nome, @Param("sistema") List<SistemaProducao> sistemas, Pageable pageRequest);

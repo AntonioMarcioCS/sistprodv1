@@ -1,5 +1,7 @@
 package com.antoniomarciocs.sistprodv1.services;
 
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.antoniomarciocs.sistprodv1.domain.Criatorio;
 import com.antoniomarciocs.sistprodv1.domain.SistemaProducao;
+import com.antoniomarciocs.sistprodv1.domain.enums.TipoCriatorio;
+import com.antoniomarciocs.sistprodv1.dto.CriatorioDTO;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
 import com.antoniomarciocs.sistprodv1.repositories.SistemaProducaoRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
@@ -25,6 +29,9 @@ public class CriatorioService {
 	@Autowired
 	private SistemaProducaoRepository sistemaRepo;
 	
+	@Autowired
+	private SistemaProducaoService sistemaService;
+	
 	public Criatorio find(Integer id) {
 		Optional<Criatorio> obj = criatorioRepo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
@@ -33,6 +40,12 @@ public class CriatorioService {
 	
 	public List<Criatorio> findBySistema(Integer sistemaId) {
 		return criatorioRepo.findCriatorios(sistemaId);
+	}
+	
+	public Criatorio fromDTO(CriatorioDTO objDTO) {
+		SistemaProducao sistema = sistemaService.buscar(objDTO.getSistemaId());
+		objDTO.setData(new Date());
+		return new Criatorio(objDTO.getId(),objDTO.getNome(),objDTO.getData(),TipoCriatorio.toEnum(objDTO.getTipo()), objDTO.getComprimento(), objDTO.getLargura(), objDTO.getProfundidade(), sistema);
 	}
 	
 	public Page<Criatorio> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
@@ -55,6 +68,9 @@ public class CriatorioService {
 	
 	private void atualizaDados(Criatorio newObj, Criatorio obj) {
 		newObj.setNome(obj.getNome());
+		newObj.setComprimento(obj.getComprimento());
+		newObj.setLargura(obj.getLargura());
+		newObj.setProfundidade(obj.getProfundidade());
 		newObj.setSistema(obj.getSistema());
 	}
 }

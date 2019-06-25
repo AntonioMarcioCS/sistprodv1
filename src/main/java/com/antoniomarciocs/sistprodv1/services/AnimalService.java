@@ -1,5 +1,6 @@
 package com.antoniomarciocs.sistprodv1.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import com.antoniomarciocs.sistprodv1.domain.Animal;
 import com.antoniomarciocs.sistprodv1.domain.Criatorio;
+import com.antoniomarciocs.sistprodv1.domain.enums.StatusRetirada;
+import com.antoniomarciocs.sistprodv1.domain.enums.TipoAnimal;
+import com.antoniomarciocs.sistprodv1.dto.AnimalDTO;
 import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
 import com.antoniomarciocs.sistprodv1.services.exceptions.ObjectNotFountException;
@@ -24,12 +28,21 @@ public class AnimalService {
 	@Autowired
 	private CriatorioRepository criatorioRepo;
 	
+	@Autowired
+	private CriatorioService criatorioService;
+	
 	public Animal find(Integer id) {
 		Optional<Animal> obj = animalRepo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFountException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Animal.class.getName()));
 	}
-
+	
+	public Animal fromDTO(AnimalDTO objDTO) {
+		Criatorio criatorio = criatorioService.find(objDTO.getCriatorioId());
+		objDTO.setNascimento(new Date());
+		return new Animal(objDTO.getId(),objDTO.getNome(),objDTO.getRaca(), objDTO.getNascimento(),TipoAnimal.toEnum(objDTO.getTipo()), StatusRetirada.DISPONIVEL, criatorio);
+	}
+	
 	public Page<Animal> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		List<Criatorio> criatorio = criatorioRepo.findAllById(ids);

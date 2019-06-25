@@ -35,7 +35,8 @@ public class CriatorioResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Criatorio obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CriatorioDTO objDTO) {
+		Criatorio obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();

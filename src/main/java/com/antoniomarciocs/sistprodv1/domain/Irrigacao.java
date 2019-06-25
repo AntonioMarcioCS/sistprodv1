@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Irrigacao implements Serializable {
@@ -19,6 +20,8 @@ public class Irrigacao implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	private double tempo;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date data;
 	
 	@JsonBackReference
@@ -30,9 +33,10 @@ public class Irrigacao implements Serializable {
 		
 	}
 
-	public Irrigacao(Integer id, Date data, Plantio plantio) {
+	public Irrigacao(Integer id,double tempo, Date data, Plantio plantio) {
 		super();
 		this.id = id;
+		this.tempo = tempo;
 		this.data = data;
 		this.plantio = plantio;
 	}
@@ -43,6 +47,14 @@ public class Irrigacao implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public double getTempo() {
+		return tempo;
+	}
+
+	public void setTempo(double tempo) {
+		this.tempo = tempo;
 	}
 
 	public Date getData() {

@@ -16,7 +16,10 @@ import com.antoniomarciocs.sistprodv1.domain.Plantio;
 @Repository
 public interface IrrigacaoRepository extends JpaRepository<Irrigacao, Integer>  {
 	@Transactional(readOnly=true)
-	@Query("SELECT DISTINCT obj FROM Irrigacao obj INNER JOIN obj.plantio plantio WHERE obj.id LIKE %:id% AND plantio IN :plantio")
-	Page<Irrigacao> findDistinctByNomeContainingAndPlantioIn(@Param("id") String id, @Param("plantio") List<Plantio> plantio, Pageable pageRequest);
-
+	@Query("SELECT DISTINCT obj FROM Irrigacao obj INNER JOIN obj.plantio plantio WHERE plantio IN :plantio")
+	Page<Irrigacao> findDistinctByIdContainingAndPlantioIn(@Param("plantio") List<Plantio> plantio, Pageable pageRequest);
+	
+	@Transactional(readOnly=true)
+	@Query("SELECT obj FROM Irrigacao obj WHERE obj.plantio.id = :plantioId ORDER BY obj.data")
+	public List<Irrigacao> findIrrigacoes(@Param("plantioId") Integer plantio_id);
 }

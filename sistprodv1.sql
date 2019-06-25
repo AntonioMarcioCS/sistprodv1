@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Mar-2019 às 22:15
+-- Generation Time: 25-Jun-2019 às 16:15
 -- Versão do servidor: 5.6.25
 -- PHP Version: 5.6.11
 
@@ -34,15 +34,7 @@ CREATE TABLE IF NOT EXISTS `animal` (
   `status` int(11) DEFAULT NULL,
   `tipo` int(11) DEFAULT NULL,
   `criatorio_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `animal`
---
-
-INSERT INTO `animal` (`id`, `nascimento`, `nome`, `raca`, `status`, `tipo`, `criatorio_id`) VALUES
-(1, '2019-02-12 00:27:00', 'Galinha caipira', 'Caipira', 2, 3, 2),
-(2, '2019-02-12 00:28:00', 'Galinha Boa', 'Caipira', 2, 3, 2);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -53,18 +45,10 @@ INSERT INTO `animal` (`id`, `nascimento`, `nome`, `raca`, `status`, `tipo`, `cri
 CREATE TABLE IF NOT EXISTS `canteiro` (
   `id` int(11) NOT NULL,
   `comprimento` double DEFAULT NULL,
-  `largaura` double DEFAULT NULL,
+  `largura` double DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
-  `setor_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `canteiro`
---
-
-INSERT INTO `canteiro` (`id`, `comprimento`, `largaura`, `nome`, `setor_id`) VALUES
-(1, 100, 20, 'Canteiro do Repolho', 1),
-(2, 100, 20, 'Canteiro do Alface', 1);
+  `sistema_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -75,19 +59,13 @@ INSERT INTO `canteiro` (`id`, `comprimento`, `largaura`, `nome`, `setor_id`) VAL
 CREATE TABLE IF NOT EXISTS `criatorio` (
   `id` int(11) NOT NULL,
   `comprimento` double DEFAULT NULL,
+  `data` datetime DEFAULT NULL,
   `largura` double DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `profundidade` double DEFAULT NULL,
-  `setor_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `criatorio`
---
-
-INSERT INTO `criatorio` (`id`, `comprimento`, `largura`, `nome`, `profundidade`, `setor_id`) VALUES
-(1, 100, 20, 'Tanque de Peixes', 10, 2),
-(2, 100, 20, 'Poleiro das galinhas', 0, 2);
+  `tipo` int(11) DEFAULT NULL,
+  `sistema_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -97,17 +75,34 @@ INSERT INTO `criatorio` (`id`, `comprimento`, `largura`, `nome`, `profundidade`,
 
 CREATE TABLE IF NOT EXISTS `cultura` (
   `id` int(11) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `nome` varchar(255) DEFAULT NULL,
+  `tempo` int(11) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `cultura`
 --
 
-INSERT INTO `cultura` (`id`, `nome`) VALUES
-(1, 'Cebola'),
-(2, 'Coentro'),
-(3, 'Milho');
+INSERT INTO `cultura` (`id`, `nome`, `tempo`) VALUES
+(1, 'Abobrinha', 60),
+(2, 'Alface', 60),
+(3, 'Berinjela', 90),
+(4, 'Beterraba', 90),
+(5, 'Cebola', 120),
+(6, 'Cebolinha', 60),
+(7, 'Cenoura', 90),
+(8, 'Couve', 60),
+(9, 'Espinafre', 60),
+(10, 'Pepino', 60),
+(11, 'Pimentão', 90),
+(12, 'Quiabo', 60),
+(13, 'Rabanete', 30),
+(14, 'Repolho', 120),
+(15, 'Tomate', 120),
+(16, 'Coentro', 60),
+(17, 'Milho', 90),
+(18, 'Feijão', 90),
+(19, 'Salsa', 60);
 
 -- --------------------------------------------------------
 
@@ -126,7 +121,8 @@ CREATE TABLE IF NOT EXISTS `cultura_grupo` (
 
 INSERT INTO `cultura_grupo` (`cultura_id`, `grupo_id`) VALUES
 (1, 1),
-(2, 2);
+(2, 2),
+(3, 2);
 
 -- --------------------------------------------------------
 
@@ -140,16 +136,7 @@ CREATE TABLE IF NOT EXISTS `defensivo` (
   `nome` varchar(255) DEFAULT NULL,
   `qtd` int(11) DEFAULT NULL,
   `plantio_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `defensivo`
---
-
-INSERT INTO `defensivo` (`id`, `data`, `nome`, `qtd`, `plantio_id`) VALUES
-(1, '2019-02-13 16:00:00', 'Defensivo biológico', 2, 1),
-(2, '2019-02-13 16:00:00', 'Defensivo biológico', 2, 2),
-(3, '2019-02-13 16:00:00', 'Defensivo biológico', 2, 3);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -160,20 +147,10 @@ INSERT INTO `defensivo` (`id`, `data`, `nome`, `qtd`, `plantio_id`) VALUES
 CREATE TABLE IF NOT EXISTS `fertilizante` (
   `id` int(11) NOT NULL,
   `data` datetime DEFAULT NULL,
-  `nome` varchar(255) DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
   `qtd` int(11) DEFAULT NULL,
   `plantio_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `fertilizante`
---
-
-INSERT INTO `fertilizante` (`id`, `data`, `nome`, `qtd`, `plantio_id`) VALUES
-(1, '2019-02-07 15:58:00', 'Adubo orgânico', 2, 2),
-(2, '2019-02-13 15:58:00', 'Adubo orgânico', 2, 2),
-(3, '2019-02-13 16:00:00', 'Adubo orgânico', 2, 3),
-(4, '2019-02-13 16:00:00', 'Adubo químico', 2, 1);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -203,18 +180,30 @@ INSERT INTO `grupo` (`id`, `nome`) VALUES
 CREATE TABLE IF NOT EXISTS `irrigacao` (
   `id` int(11) NOT NULL,
   `data` datetime DEFAULT NULL,
+  `tempo` double NOT NULL,
   `plantio_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Extraindo dados da tabela `irrigacao`
+-- Estrutura da tabela `perfis`
 --
 
-INSERT INTO `irrigacao` (`id`, `data`, `plantio_id`) VALUES
-(1, '2019-02-13 16:00:00', 1),
-(2, '2019-02-13 16:00:00', 1),
-(3, '2019-02-13 16:00:00', 2),
-(4, '2019-02-13 16:00:00', 3);
+CREATE TABLE IF NOT EXISTS `perfis` (
+  `usuario_id` int(11) NOT NULL,
+  `perfis` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `perfis`
+--
+
+INSERT INTO `perfis` (`usuario_id`, `perfis`) VALUES
+(1, 1),
+(1, 2),
+(2, 2),
+(3, 2);
 
 -- --------------------------------------------------------
 
@@ -224,43 +213,14 @@ INSERT INTO `irrigacao` (`id`, `data`, `plantio_id`) VALUES
 
 CREATE TABLE IF NOT EXISTS `plantio` (
   `id` int(11) NOT NULL,
+  `colheita` datetime DEFAULT NULL,
   `data` datetime DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `qtd` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `canteiro_id` int(11) DEFAULT NULL,
   `cultura_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `plantio`
---
-
-INSERT INTO `plantio` (`id`, `data`, `nome`, `qtd`, `status`, `canteiro_id`, `cultura_id`) VALUES
-(1, '2019-02-13 10:44:00', 'Cebolas', 50, 2, 1, 1),
-(2, '2019-02-13 10:48:00', 'Coentro', 20, 2, 2, 2),
-(3, '2019-02-13 10:48:00', 'Milho', 20, 2, 2, 3);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `setor`
---
-
-CREATE TABLE IF NOT EXISTS `setor` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `regiao` varchar(255) DEFAULT NULL,
-  `sistema_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `setor`
---
-
-INSERT INTO `setor` (`id`, `nome`, `regiao`, `sistema_id`) VALUES
-(1, 'Hortalícias', 'Sul', 1),
-(2, 'Galinhas', 'Norte', 2);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -271,22 +231,11 @@ INSERT INTO `setor` (`id`, `nome`, `regiao`, `sistema_id`) VALUES
 CREATE TABLE IF NOT EXISTS `sistema_producao` (
   `id` int(11) NOT NULL,
   `comprimento` double DEFAULT NULL,
+  `data` datetime DEFAULT NULL,
   `largura` double DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `usuario_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `sistema_producao`
---
-
-INSERT INTO `sistema_producao` (`id`, `comprimento`, `largura`, `nome`, `usuario_id`) VALUES
-(1, 100, 80, 'Sisteminha', 1),
-(2, 50, 50, 'Sisteminha do IF', 1),
-(3, 100, 80, 'Sisteminha três', 1),
-(4, 50, 50, 'Sisteminha Quatro', 2),
-(5, 100, 80, 'Sisteminha Cinco', 2),
-(6, 50, 50, 'Sisteminha Seis', 2);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -299,16 +248,18 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `cpf` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
-  `senha` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `senha` varchar(255) DEFAULT NULL,
+  `tipo` int(11) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `cpf`, `email`, `nome`, `senha`) VALUES
-(1, '123.432.123-56', 'marcio@gmail.com', 'Marcio', '123'),
-(2, '123.432.123-56', 'levi@gmail.com', 'Levi', '123');
+INSERT INTO `usuario` (`id`, `cpf`, `email`, `nome`, `senha`, `tipo`) VALUES
+(1, '123.432.123-56', 'marcio@gmail.com', 'Marcio', '$2a$10$.iu9wiXNjNNl8M5x5w6vquqTv3wXNo8rmIWjWx0qMPSTs4gLfZnWa', 1),
+(2, '123.432.123-56', 'levi@gmail.com', 'Levi', '$2a$10$wZG0TWzj7ujKw1e.nESkYOaSaEPakUoTNMj/vDfLXPhYYeQSdmhZ.', 2),
+(3, '123.432.123-56', 'luna@gmail.com', 'Luna', '$2a$10$8soNzNP.ItR6YPXOZA/9r.PbRhWpPTDvD5p10XaOUMk0u4RmxU2ni', 1);
 
 --
 -- Indexes for dumped tables
@@ -326,14 +277,14 @@ ALTER TABLE `animal`
 --
 ALTER TABLE `canteiro`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK3nwybgwl57nmqs1s1ky0camh` (`setor_id`);
+  ADD KEY `FK7iwkj3u60095f1irvnm03fxlt` (`sistema_id`);
 
 --
 -- Indexes for table `criatorio`
 --
 ALTER TABLE `criatorio`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FKr7xoblvpbdvncvkoj13lb7kh5` (`setor_id`);
+  ADD KEY `FKej57grjscqdncg3p4n456tk76` (`sistema_id`);
 
 --
 -- Indexes for table `cultura`
@@ -376,19 +327,18 @@ ALTER TABLE `irrigacao`
   ADD KEY `FK67uitqi7frkbuilf3v3lx0j2d` (`plantio_id`);
 
 --
+-- Indexes for table `perfis`
+--
+ALTER TABLE `perfis`
+  ADD KEY `FKiso72ajmkk36lw7dqjva1h8hl` (`usuario_id`);
+
+--
 -- Indexes for table `plantio`
 --
 ALTER TABLE `plantio`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKoy1x4ydvb2v7r84y3decmawen` (`canteiro_id`),
   ADD KEY `FKdeqn1v6qdpd1urahfj9aw4m21` (`cultura_id`);
-
---
--- Indexes for table `setor`
---
-ALTER TABLE `setor`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKc75srp8nhfv37ksqvvpi8jlyt` (`sistema_id`);
 
 --
 -- Indexes for table `sistema_producao`
@@ -401,7 +351,8 @@ ALTER TABLE `sistema_producao`
 -- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UK_5171l57faosmj8myawaucatdw` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -411,32 +362,32 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `animal`
 --
 ALTER TABLE `animal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `canteiro`
 --
 ALTER TABLE `canteiro`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `criatorio`
 --
 ALTER TABLE `criatorio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `cultura`
 --
 ALTER TABLE `cultura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `defensivo`
 --
 ALTER TABLE `defensivo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `fertilizante`
 --
 ALTER TABLE `fertilizante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `grupo`
 --
@@ -446,27 +397,22 @@ ALTER TABLE `grupo`
 -- AUTO_INCREMENT for table `irrigacao`
 --
 ALTER TABLE `irrigacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `plantio`
 --
 ALTER TABLE `plantio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `setor`
---
-ALTER TABLE `setor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `sistema_producao`
 --
 ALTER TABLE `sistema_producao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -58,4 +58,5 @@ public class PlantioResource {
 		Page<PlantioDTO> listDto = list.map(obj -> new PlantioDTO(obj));  
 		return ResponseEntity.ok().body(listDto);
 	}
+	
 }

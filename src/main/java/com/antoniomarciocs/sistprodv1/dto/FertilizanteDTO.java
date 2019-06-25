@@ -3,20 +3,16 @@ package com.antoniomarciocs.sistprodv1.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.validator.constraints.Length;
-
 import com.antoniomarciocs.sistprodv1.domain.Fertilizante;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class FertilizanteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	@NotEmpty(message="Preenchimento obrigatório")
-	@Length(min=4, max=80, message="Escreva entre 4 e 80 caracteres")
-	private String nome;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date data;
+	private String descricao;
 	private Integer qtd;
 	private Integer plantioId;
 	
@@ -25,7 +21,7 @@ public class FertilizanteDTO implements Serializable {
 
 	public FertilizanteDTO(Fertilizante obj) {
 		id = obj.getId();
-		nome = obj.getNome();
+		descricao = obj.getDescricao();
 		data = obj.getData();
 		qtd = obj.getQtd();
 		plantioId = obj.getPlantio().getId();
@@ -39,20 +35,20 @@ public class FertilizanteDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public Date getData() {
 		return data;
 	}
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public Integer getQtd() {

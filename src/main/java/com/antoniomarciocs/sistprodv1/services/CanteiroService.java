@@ -64,6 +64,8 @@ public class CanteiroService {
 	
 	private void atualizaDados(Canteiro newObj, Canteiro obj) {
 		newObj.setNome(obj.getNome());
+		newObj.setComprimento(obj.getComprimento());
+		newObj.setLargura(obj.getLargura());
 		newObj.setSistema(obj.getSistema());
 	}
 }
