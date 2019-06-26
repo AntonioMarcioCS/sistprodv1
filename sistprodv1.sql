@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.4.12
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: 25-Jun-2019 às 16:15
--- Versão do servidor: 5.6.25
--- PHP Version: 5.6.11
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -16,15 +7,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `sistprodv1`
---
 
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `animal`
---
 
 CREATE TABLE IF NOT EXISTS `animal` (
   `id` int(11) NOT NULL,
@@ -36,11 +19,7 @@ CREATE TABLE IF NOT EXISTS `animal` (
   `criatorio_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `canteiro`
---
 
 CREATE TABLE IF NOT EXISTS `canteiro` (
   `id` int(11) NOT NULL,
@@ -50,11 +29,7 @@ CREATE TABLE IF NOT EXISTS `canteiro` (
   `sistema_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `criatorio`
---
 
 CREATE TABLE IF NOT EXISTS `criatorio` (
   `id` int(11) NOT NULL,
@@ -67,11 +42,7 @@ CREATE TABLE IF NOT EXISTS `criatorio` (
   `sistema_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `cultura`
---
 
 CREATE TABLE IF NOT EXISTS `cultura` (
   `id` int(11) NOT NULL,
@@ -79,9 +50,7 @@ CREATE TABLE IF NOT EXISTS `cultura` (
   `tempo` int(11) DEFAULT NULL
 ) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `cultura`
---
+
 
 INSERT INTO `cultura` (`id`, `nome`, `tempo`) VALUES
 (1, 'Abobrinha', 60),
@@ -104,31 +73,21 @@ INSERT INTO `cultura` (`id`, `nome`, `tempo`) VALUES
 (18, 'Feijão', 90),
 (19, 'Salsa', 60);
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `cultura_grupo`
---
 
 CREATE TABLE IF NOT EXISTS `cultura_grupo` (
   `cultura_id` int(11) NOT NULL,
   `grupo_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `cultura_grupo`
---
+
 
 INSERT INTO `cultura_grupo` (`cultura_id`, `grupo_id`) VALUES
 (1, 1),
 (2, 2),
 (3, 2);
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `defensivo`
---
 
 CREATE TABLE IF NOT EXISTS `defensivo` (
   `id` int(11) NOT NULL,
@@ -138,11 +97,7 @@ CREATE TABLE IF NOT EXISTS `defensivo` (
   `plantio_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `fertilizante`
---
 
 CREATE TABLE IF NOT EXISTS `fertilizante` (
   `id` int(11) NOT NULL,
@@ -152,30 +107,20 @@ CREATE TABLE IF NOT EXISTS `fertilizante` (
   `plantio_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `grupo`
---
 
 CREATE TABLE IF NOT EXISTS `grupo` (
   `id` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `grupo`
---
+
 
 INSERT INTO `grupo` (`id`, `nome`) VALUES
 (1, 'Hortalícias'),
 (2, 'Grãos');
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `irrigacao`
---
 
 CREATE TABLE IF NOT EXISTS `irrigacao` (
   `id` int(11) NOT NULL,
@@ -184,20 +129,14 @@ CREATE TABLE IF NOT EXISTS `irrigacao` (
   `plantio_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `perfis`
---
 
 CREATE TABLE IF NOT EXISTS `perfis` (
   `usuario_id` int(11) NOT NULL,
   `perfis` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `perfis`
---
+
 
 INSERT INTO `perfis` (`usuario_id`, `perfis`) VALUES
 (1, 1),
@@ -205,11 +144,7 @@ INSERT INTO `perfis` (`usuario_id`, `perfis`) VALUES
 (2, 2),
 (3, 2);
 
--- --------------------------------------------------------
 
---
--- Estrutura da tabela `plantio`
---
 
 CREATE TABLE IF NOT EXISTS `plantio` (
   `id` int(11) NOT NULL,
@@ -222,11 +157,6 @@ CREATE TABLE IF NOT EXISTS `plantio` (
   `cultura_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `sistema_producao`
---
 
 CREATE TABLE IF NOT EXISTS `sistema_producao` (
   `id` int(11) NOT NULL,

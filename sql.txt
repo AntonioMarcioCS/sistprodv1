@@ -1,6 +1,4 @@
-mysql://b042173b3eb758:f5500cf0@us-cdbr-iron-east-03.cleardb.net/heroku_84f58182fad9202?reconnect=true
-
-mysql --host=us-cdbr-iron-east-03.cleardb.net --user=b042173b3eb758 --password=f5500cf0 --reconnect heroku_84f58182fad9202 < sistprodv1.sql
+mysql://becc74be614499:bc61d578@us-cdbr-iron-east-02.cleardb.net/heroku_f7372b425a7226a?reconnect=true
 
 
-mysql://b042173b3eb758:f5500cf0@us-cdbr-iron-east-03.cleardb.net/heroku_84f58182fad9202?reconnect=true
+mysql --host=us-cdbr-iron-east-02.cleardb.net --user=becc74be614499 --password=bc61d578 --reconnect heroku_f7372b425a7226a < sistprodv1.sql
