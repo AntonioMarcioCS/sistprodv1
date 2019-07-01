@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.antoniomarciocs.sistprodv1.domain.Animal;
 import com.antoniomarciocs.sistprodv1.domain.Canteiro;
+import com.antoniomarciocs.sistprodv1.domain.Colheita;
 import com.antoniomarciocs.sistprodv1.domain.Criatorio;
 import com.antoniomarciocs.sistprodv1.domain.Cultura;
 import com.antoniomarciocs.sistprodv1.domain.Defensivo;
@@ -29,6 +30,7 @@ import com.antoniomarciocs.sistprodv1.domain.enums.TipoUsuario;
 
 import com.antoniomarciocs.sistprodv1.repositories.AnimalRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CanteiroRepository;
+import com.antoniomarciocs.sistprodv1.repositories.ColheitaRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CriatorioRepository;
 import com.antoniomarciocs.sistprodv1.repositories.CulturaRepository;
 import com.antoniomarciocs.sistprodv1.repositories.DefensivoRepository;
@@ -47,7 +49,6 @@ public class DBService {
 	private SistemaProducaoRepository sistemaProducaoRepository;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
 	@Autowired
 	private CanteiroRepository canteiroRepository;
 	@Autowired
@@ -66,6 +67,9 @@ public class DBService {
 	private IrrigacaoRepository irrigacaoRepository;
 	@Autowired
 	private FertilizanteRepository fertilizanteRepository;
+	@Autowired
+	private ColheitaRepository colheitaRepository;
+	
 	
 	public void instantiateTestDatabase() throws ParseException  {
 		
@@ -76,7 +80,7 @@ public class DBService {
 		user2.addPerfil(Perfil.USUARIO);
 		user3.addPerfil(Perfil.USUARIO);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy HH:mm");
 		
 		//SistemaProducao sistema1 = new SistemaProducao(null,"Sisteminha",sdf.parse("10/04/2019 22:31"),100.0, 80.0, user1 );
 		//SistemaProducao sistema2 = new SistemaProducao(null,"Sisteminha do IF",sdf.parse("10/04/2019 22:31"),50.0, 50.0, user1);
@@ -96,8 +100,8 @@ public class DBService {
 		//Criatorio criatorio3 = new Criatorio(null, "Chiqueiro 1",null, TipoCriatorio.CHIQUEIRO, 20.0, 10.0, 0.0, sistema6);
 		
 		
-		Grupo grupo1 = new Grupo(null, "Hortalícias");
-		Grupo grupo2 = new Grupo(null, "Grãos");
+		//Grupo grupo1 = new Grupo(null, "Hortalícias");
+		//Grupo grupo2 = new Grupo(null, "Grãos");
 		Cultura cultura1 = new Cultura(null, "Abobrinha", 60);
 		Cultura cultura2 = new Cultura(null, "Alface", 60);
 		Cultura cultura3 = new Cultura(null, "Berinjela", 90);
@@ -118,7 +122,7 @@ public class DBService {
 		Cultura cultura18 = new Cultura(null, "Feijão", 90);
 		Cultura cultura19 = new Cultura(null, "Salsa", 60);
 		
-		
+		/*
 		grupo1.getCulturas().addAll(Arrays.asList(cultura1, cultura2));
 		grupo2.getCulturas().addAll(Arrays.asList(cultura3,cultura2));
 		cultura1.getGrupos().addAll(Arrays.asList(grupo1));
@@ -131,59 +135,68 @@ public class DBService {
 		colheita.add(Calendar.DAY_OF_MONTH,cultura1.getTempo());
 		
 		
-		//Plantio plantio1 = new Plantio(null, "Cebolas", sdf.parse("13/02/2019 07:44"),colheita.getTime(), 50, StatusRetirada.DISPONIVEL, canteiro1, cultura1);
-		//Plantio plantio2 = new Plantio(null, "Coentro", sdf.parse("13/02/2019 07:48"),colheita.getTime(), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura2);
-		//Plantio plantio3 = new Plantio(null, "Milho", sdf.parse("13/02/2019 07:48"), colheita.getTime(),20, StatusRetirada.DISPONIVEL, canteiro2, cultura3);
-		//Plantio plantio1Levi = new Plantio(null, "Milho", sdf.parse("02/05/2019 07:48"),colheita.getTime(), 20,StatusRetirada.DISPONIVEL, canteiro3, cultura3);
-		//Plantio plantio5 = new Plantio(null, "Milho", sdf.parse("13/02/2019 13:10"), colheita.getTime(),20, StatusRetirada.DISPONIVEL, canteiro3, cultura1);
+		Plantio plantio1 = new Plantio(null, "Cebolas", sdf.parse("13/02/2019 07:44"),colheita.getTime(), 50, StatusRetirada.DISPONIVEL, canteiro1, cultura1);
+		Plantio plantio2 = new Plantio(null, "Coentro", sdf.parse("13/02/2019 07:48"),colheita.getTime(), 20, StatusRetirada.DISPONIVEL, canteiro2, cultura2);
+		Plantio plantio3 = new Plantio(null, "Milho", sdf.parse("13/02/2019 07:48"), colheita.getTime(),20, StatusRetirada.DISPONIVEL, canteiro2, cultura3);
+		Plantio plantio1Levi = new Plantio(null, "Milho", sdf.parse("02/05/2019 07:48"),colheita.getTime(), 20,StatusRetirada.DISPONIVEL, canteiro3, cultura3);
+		Plantio plantio5 = new Plantio(null, "Milho", sdf.parse("13/02/2019 13:10"), colheita.getTime(),20, StatusRetirada.DISPONIVEL, canteiro3, cultura1);
 		
-		//Fertilizante fertilizacao1 = new Fertilizante(null, "Adubo orgânico", sdf.parse("07/02/2019 12:58"), 2, plantio2);
-		//Fertilizante fertilizacao2 = new Fertilizante(null, "Adubo orgânico", sdf.parse("13/02/2019 12:58"), 2, plantio2);
-		//Fertilizante fertilizacao3 = new Fertilizante(null, "Adubo orgânico", sdf.parse("13/02/2019 13:00"), 2, plantio3);
-		//Fertilizante fertilizacao4 = new Fertilizante(null, "Adubo químico", sdf.parse("13/02/2019 13:00"), 2, plantio1);
-		//Irrigacao irrigacao1 = new Irrigacao(null, sdf.parse("13/02/2019 13:00"), plantio1);
-		//Irrigacao irrigacao2 = new Irrigacao(null, sdf.parse("13/02/2019 13:00"), plantio1);
-		//Irrigacao irrigacao3 = new Irrigacao(null, sdf.parse("13/02/2019 13:00"), plantio2);
-		//Irrigacao irrigacao4 = new Irrigacao(null, sdf.parse("13/02/2019 13:00"), plantio3);
-		//Defensivo defensivo1 = new Defensivo(null, "Defensivo biológico", sdf.parse("13/02/2019 13:00"), 2, plantio1);
-		//Defensivo defensivo2 = new Defensivo(null, "Defensivo biológico", sdf.parse("13/02/2019 13:00"), 2, plantio2);
-		//Defensivo defensivo3 = new Defensivo(null, "Defensivo biológico", sdf.parse("13/02/2019 13:00"), 2, plantio3);
+		Fertilizante fertilizacao1 = new Fertilizante(null, "Adubo orgânico", sdf.parse("07/02/2019 12:58"), 2, plantio2);
+		Fertilizante fertilizacao2 = new Fertilizante(null, "Adubo orgânico", sdf.parse("13/02/2019 12:58"), 2, plantio2);
+		Fertilizante fertilizacao3 = new Fertilizante(null, "Adubo orgânico", sdf.parse("13/02/2019 13:00"), 2, plantio3);
+		Fertilizante fertilizacao4 = new Fertilizante(null, "Adubo químico", sdf.parse("13/02/2019 13:00"), 2, plantio1);
 		
-		//plantio1.getFertilizantes().addAll(Arrays.asList(fertilizacao4));
-		//plantio2.getFertilizantes().addAll(Arrays.asList(fertilizacao1,fertilizacao2));
-		//plantio3.getFertilizantes().addAll(Arrays.asList(fertilizacao3));
+		Irrigacao irrigacao1 = new Irrigacao(null, 2, sdf.parse("13/02/2019 13:00"), plantio1);
+		Irrigacao irrigacao2 = new Irrigacao(null, 3, sdf.parse("13/02/2019 13:00"), plantio1);
 		
-		//plantio1.getIrrigacoes().addAll(Arrays.asList(irrigacao1,irrigacao2));
-		//plantio2.getIrrigacoes().addAll(Arrays.asList(irrigacao3));
-		//plantio3.getIrrigacoes().addAll(Arrays.asList(irrigacao4));
+		Colheita colheita1 = new Colheita(null, 23, sdf.parse("28/06/2019 10:46"), plantio1);
 		
-		//plantio1.getDefensivos().addAll(Arrays.asList(defensivo1));
-		//plantio2.getDefensivos().addAll(Arrays.asList(defensivo2));
-		//plantio3.getDefensivos().addAll(Arrays.asList(defensivo3));
+		Irrigacao irrigacao3 = new Irrigacao(null, sdf.parse("13/02/2019 13:00"), plantio2);
+		Irrigacao irrigacao4 = new Irrigacao(null, sdf.parse("13/02/2019 13:00"), plantio3);
 		
-		//Animal animal1 = new Animal(null, "Galinha caipira", "Caipira", sdf.parse("11/02/2019 21:27") ,TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL,criatorio2);
-		//Animal animal2 = new Animal(null, "Galinha Boa", "Caipira", sdf.parse("11/02/2019 21:28"), TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL, criatorio2);
-		//Animal porquinhos = new Animal(null, "Porquinhos da índia", "Índia", sdf.parse("19/04/2019 22:57"), TipoAnimal.PORCO, StatusRetirada.DISPONIVEL, criatorio3);
+		Defensivo defensivo1 = new Defensivo(null, "Defensivo biológico", sdf.parse("13/02/2019 13:00"), 2, plantio1);
+		Defensivo defensivo2 = new Defensivo(null, "Defensivo biológico", sdf.parse("13/02/2019 13:00"), 2, plantio2);
+		Defensivo defensivo3 = new Defensivo(null, "Defensivo biológico", sdf.parse("13/02/2019 13:00"), 2, plantio3);
+		
+		plantio1.getFertilizantes().addAll(Arrays.asList(fertilizacao4));
+		plantio2.getFertilizantes().addAll(Arrays.asList(fertilizacao1,fertilizacao2));
+		plantio3.getFertilizantes().addAll(Arrays.asList(fertilizacao3));
+		
+		plantio1.getIrrigacoes().addAll(Arrays.asList(irrigacao1,irrigacao2));
+		plantio2.getIrrigacoes().addAll(Arrays.asList(irrigacao3));
+		plantio3.getIrrigacoes().addAll(Arrays.asList(irrigacao4));
+		
+		plantio1.getDefensivos().addAll(Arrays.asList(defensivo1));
+		plantio2.getDefensivos().addAll(Arrays.asList(defensivo2));
+		plantio3.getDefensivos().addAll(Arrays.asList(defensivo3));
+		
+		Animal animal1 = new Animal(null, "Galinha caipira", "Caipira", sdf.parse("11/02/2019 21:27") ,TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL,criatorio2);
+		Animal animal2 = new Animal(null, "Galinha Boa", "Caipira", sdf.parse("11/02/2019 21:28"), TipoAnimal.GALINHA, StatusRetirada.DISPONIVEL, criatorio2);
+		Animal porquinhos = new Animal(null, "Porquinhos da índia", "Índia", sdf.parse("19/04/2019 22:57"), TipoAnimal.PORCO, StatusRetirada.DISPONIVEL, criatorio3);
 			
-		//user1.getSistemas().addAll(Arrays.asList(sistema1,sistema2,sistema3));
-		//user2.getSistemas().addAll(Arrays.asList(sistema4,sistema5));
-		//user3.getSistemas().addAll(Arrays.asList(sistema6));
-		//criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
-		//criatorio3.getAnimais().addAll(Arrays.asList(porquinhos));
+		user1.getSistemas().addAll(Arrays.asList(sistema1,sistema2,sistema3));
+		user2.getSistemas().addAll(Arrays.asList(sistema4,sistema5));
+		user3.getSistemas().addAll(Arrays.asList(sistema6));
+		criatorio2.getAnimais().addAll(Arrays.asList(animal1,animal2));
+		criatorio3.getAnimais().addAll(Arrays.asList(porquinhos));*/
 			
 		usuarioRepository.saveAll(Arrays.asList(user1,user2,user3));
-		//sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2,sistema3, sistema4, sistema5, sistema6));
-		//canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2,canteiro3));
-		//criatorioRepository.saveAll(Arrays.asList(criatorio1,criatorio2));
-		//animalRepository.saveAll(Arrays.asList(animal1,animal2));
-		grupoRepository.saveAll(Arrays.asList(grupo1,grupo2));
+		/*
+		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2,sistema3, sistema4, sistema5, sistema6));
+		sistemaProducaoRepository.saveAll(Arrays.asList(sistema1,sistema2));
+		canteiroRepository.saveAll(Arrays.asList(canteiro1,canteiro2));
+		criatorioRepository.saveAll(Arrays.asList(criatorio1,criatorio2));
+		animalRepository.saveAll(Arrays.asList(animal1,animal2));
+		grupoRepository.saveAll(Arrays.asList(grupo1,grupo2));*/
+		
 		culturaRepository.saveAll(Arrays.asList(cultura1,cultura2,cultura3,cultura4,cultura5,cultura6,cultura7,cultura8,
 		cultura9,cultura10,cultura11,cultura12,cultura13,cultura14,cultura15,cultura16,cultura17,cultura18,cultura19));
 		
-		//plantioRepository.saveAll(Arrays.asList(plantio1,plantio2,plantio3,plantio1Levi,plantio5));
-		//irrigacaoRepository.saveAll(Arrays.asList(irrigacao1,irrigacao2,irrigacao3,irrigacao4));
-		//fertilizanteRepository.saveAll(Arrays.asList(fertilizacao1,fertilizacao2,fertilizacao3,fertilizacao4));
-		//defensivoRepository.saveAll(Arrays.asList(defensivo1,defensivo2,defensivo3));
+		/*plantioRepository.saveAll(Arrays.asList(plantio1,plantio2));
+		irrigacaoRepository.saveAll(Arrays.asList(irrigacao1,irrigacao2));
+		colheitaRepository.saveAll(Arrays.asList(colheita1));
+		fertilizanteRepository.saveAll(Arrays.asList(fertilizacao1,fertilizacao2,fertilizacao3,fertilizacao4));
+		defensivoRepository.saveAll(Arrays.asList(defensivo1,defensivo2,defensivo3));*/
 		
 	}
 	

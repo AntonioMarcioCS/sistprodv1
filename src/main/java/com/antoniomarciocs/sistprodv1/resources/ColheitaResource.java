@@ -16,55 +16,48 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
-import com.antoniomarciocs.sistprodv1.domain.Plantio;
-import com.antoniomarciocs.sistprodv1.dto.PlantioDTO;
+import com.antoniomarciocs.sistprodv1.domain.Colheita;
+import com.antoniomarciocs.sistprodv1.dto.ColheitaDTO;
 import com.antoniomarciocs.sistprodv1.resources.utils.URL;
-import com.antoniomarciocs.sistprodv1.services.PlantioService;
+import com.antoniomarciocs.sistprodv1.services.ColheitasService;
 
 @RestController
-@RequestMapping(value="/plantios")
-public class PlantioResource {
-	
+@RequestMapping(value="/colheitas")
+public class ColheitaResource {
+
 	@Autowired
-	private PlantioService service;
+	private ColheitasService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Plantio> find(@PathVariable Integer id) {
-		Plantio obj = service.find(id);
+	public ResponseEntity<Colheita> find(@PathVariable Integer id) {
+		Colheita obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody PlantioDTO objDto) {
-		Plantio obj = service.fromDTO(objDto);
+	public ResponseEntity<Void> insert(@Valid @RequestBody ColheitaDTO objDto) {
+		Colheita obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody PlantioDTO objDto,@PathVariable Integer id){
-		Plantio obj = service.fromDTO(objDto);
-		obj.setId(id);
-		obj = service.update(obj);
-		return ResponseEntity.noContent().build();
-	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<Page<PlantioDTO>> findPage(
-			@RequestParam(value="nome", defaultValue="") String nome, 
-			@RequestParam(value="canteiros", defaultValue="") String canteiros, 
+	public ResponseEntity<Page<ColheitaDTO>> findPage(
+			//@RequestParam(value="id", defaultValue="") String id, 
+			@RequestParam(value="plantio", defaultValue="") String plantio, 
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="orderBy", defaultValue="data") String orderBy, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction) {
-		String nomeDecoded = URL.decodeParam(nome);
-		List<Integer> ids = URL.decodeIntList(canteiros);
-		Page<Plantio> list = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
-		Page<PlantioDTO> listDto = list.map(obj -> new PlantioDTO(obj));  
+		//String idDecoded = URL.decodeParam(id);
+		List<Integer> ids = URL.decodeIntList(plantio);
+		Page<Colheita> list = service.search(ids, page, linesPerPage, orderBy, direction);
+		Page<ColheitaDTO> listDto = list.map(obj -> new ColheitaDTO(obj));  
 		return ResponseEntity.ok().body(listDto);
 	}
+	
 	
 }

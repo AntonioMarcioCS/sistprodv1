@@ -74,6 +74,7 @@ public class PlantioService {
 	
 	private void atualizaDados(Plantio newObj, Plantio obj) {
 		newObj.setNome(obj.getNome());
+		newObj.setQtd(obj.getQtd());
 		newObj.setCanteiro(obj.getCanteiro());
 		newObj.setCultura(obj.getCultura());
 	}

@@ -1,7 +1,0 @@
-
-Para implementar o esqueci a senha da aula 75 é preciso fazer a parte de serviço de email da seção 5.
-
-
-O vídeo carregando imagem de produto(131) serve de exemplo para carregar imagens dos plantios.
-
- 
